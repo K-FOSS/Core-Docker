@@ -13,6 +13,6 @@ updates:
 
   # Maintain dependencies for Docker
   - package-ecosystem: docker
-    directory: /
+    directory: /Images/Web
     schedule:
       interval: daily
