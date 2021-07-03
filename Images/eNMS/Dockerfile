@@ -5,8 +5,7 @@ RUN apk add --no-cache git gcc make bash \
 
 WORKDIR /src
 RUN git clone https://github.com/afourmy/eNMS.git
-  
-ENV LDFLAGS='-static -s'
+
 WORKDIR /src/eNMS
 RUN pip install -r build/requirements/requirements.txt 
 
