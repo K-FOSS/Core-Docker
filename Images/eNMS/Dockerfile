@@ -1,7 +1,7 @@
 FROM python:3-alpine as builder
 
 RUN apk add --no-cache git gcc make bash \
-    && apk add --no-cache musl-dev libffi-dev libxml2-dev libxslt-dev openssl-dev 
+    && apk add --no-cache musl-dev libffi-dev libxml2-dev libxslt-dev openssl-dev g++
 
 WORKDIR /src
 RUN git clone https://github.com/afourmy/eNMS.git
