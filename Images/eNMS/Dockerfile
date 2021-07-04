@@ -1,13 +1,14 @@
 FROM python:3-alpine as builder
 
 RUN apk add --no-cache git gcc make bash \
-    && apk add --no-cache musl-dev libffi-dev libxml2-dev libxslt-dev openssl-dev g++
+    && apk add --no-cache musl-dev libffi-dev libxml2-dev libxslt-dev openssl-dev g++ rust
 
 WORKDIR /src
 RUN git clone https://github.com/afourmy/eNMS.git
 
 WORKDIR /src/eNMS
-RUN pip install -r build/requirements/requirements.txt 
+RUN pip install --upgrade pip \
+    && pip install -r build/requirements/requirements.txt 
 
 FROM python:3-alpine
 RUN apk add --no-cache git libffi-dev libxml2-dev libxslt-dev openssl-dev  ca-certificates
