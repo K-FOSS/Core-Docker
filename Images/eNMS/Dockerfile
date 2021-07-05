@@ -1,7 +1,7 @@
-FROM python:3-alpine as builder
+FROM alpine:latest as builder
 
 RUN apk add --no-cache git gcc make bash \
-    && apk add --no-cache musl-dev libffi-dev libxml2-dev libxslt-dev openssl-dev g++ rust
+    && apk add --no-cache musl-dev libxml2-dev libxslt-dev g++ rust gcc python3-dev libffi-dev openssl-dev cargo
 
 WORKDIR /src
 RUN git clone https://github.com/afourmy/eNMS.git
