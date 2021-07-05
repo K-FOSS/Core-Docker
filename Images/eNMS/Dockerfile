@@ -9,8 +9,7 @@ RUN git clone https://github.com/afourmy/eNMS.git
 
 WORKDIR /src/eNMS
 RUN pip install --upgrade pip \
-    && pip install -r build/requirements/requirements.txt \
-    && pip install -r build/requirements/requirements_optional.txt
+    && pip install -r build/requirements/requirements.txt
 
 
 
