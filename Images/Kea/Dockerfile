@@ -40,6 +40,14 @@ RUN ./configure \
   && make DESTDIR=/tmp/out install
 
 FROM alpine
+RUN apk add --no-cache \
+  libgcc \
+  musl \
+  libstdc++ \
+  mariadb-connector-c \
+  libpq \
+  botan-libs \
+  log4cplus
 
 COPY --from=builder /tmp/out /
 
