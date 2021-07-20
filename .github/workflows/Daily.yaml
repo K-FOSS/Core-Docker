@@ -35,6 +35,7 @@ jobs:
         with:
           context: ./Images/Kea
           cache-from: type=registry,ref=kristianfjones/kea:vps1-core
+          cache-to: type=inline
           push: true
           tags: kristianfjones/kea:vps1-core
 
