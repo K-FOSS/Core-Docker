@@ -27,7 +27,6 @@ RUN ls -lah
 RUN ./configure \
 	--prefix=/usr \
 	--sysconfdir=/etc \
-  --help \
 	--localstatedir=/var \
 	--libexecdir=/usr/lib \
 	--runstatedir=/run \
