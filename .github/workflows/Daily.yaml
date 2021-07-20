@@ -54,3 +54,12 @@ jobs:
           context: ./Images/KeaAdmin
           push: true
           tags: kristianfjones/kea:vps1-admin
+
+      - name: Build and push
+        id: asterisk_build
+        if: ${{ github.ref == 'refs/heads/main' }}
+        uses: docker/build-push-action@v2
+        with:
+          context: ./Images/Asterisk
+          push: true
+          tags: kristianfjones/asterisk-pbx:vps1
