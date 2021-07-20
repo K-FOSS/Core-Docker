@@ -27,6 +27,7 @@ RUN ls -lah
 RUN ./configure \
 	--prefix=/usr \
 	--sysconfdir=/etc \
+  --help \
 	--localstatedir=/var \
 	--libexecdir=/usr/lib \
 	--runstatedir=/run \
@@ -36,7 +37,7 @@ RUN ./configure \
 	--enable-generate-messages \
 	--enable-generate-parser \
 	--enable-shell \
-  && make \
+  && make -j$(nproc) \
   && make DESTDIR=/tmp/out install
 
 FROM alpine
