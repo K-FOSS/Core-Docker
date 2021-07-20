@@ -34,6 +34,7 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./Images/Kea
+          cache-from: type=registry,ref=kristianfjones/kea:vps1-core
           push: true
           tags: kristianfjones/kea:vps1-core
 
