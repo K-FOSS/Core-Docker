@@ -45,6 +45,7 @@ RUN apk add --no-cache \
   musl \
   libstdc++ \
   mariadb-connector-c \
+  mariadb-client \
   libpq \
   botan-libs \
   log4cplus
