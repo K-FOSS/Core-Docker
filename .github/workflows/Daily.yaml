@@ -29,6 +29,17 @@ jobs:
           password: ${{ secrets.DH_TOKEN }}
 
       - name: Build and push
+        id: mariadbd_build
+        if: ${{ github.ref == 'refs/heads/main' }}
+        uses: docker/build-push-action@v2
+        with:
+          context: ./Images/MariaDB
+          cache-from: type=registry,ref=kristianfjones/mariadb:vps1-core
+          cache-to: type=inline
+          push: true
+          tags: kristianfjones/mariadb:vps1-core
+
+      - name: Build and push
         id: keadhcp_build
         if: ${{ github.ref == 'refs/heads/main' }}
         uses: docker/build-push-action@v2
