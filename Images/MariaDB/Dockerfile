@@ -1,7 +1,5 @@
-FROM alpine
+FROM yobasystems/alpine-mariadb:10
 
-RUN apk add --no-cache mariadb
-
-RUN ln -s /data /var/lib/mysql
+RUN ln -s /data/files /var/lib/mysql
 
 ENTRYPOINT [ "/usr/bin/mariadbd" ]
