@@ -1,25 +1,22 @@
-FROM ubuntu:21.04
+FROM alpine as builder
 
-ENV DEBIAN_FRONTEND noninteractive
-
-RUN apt update && apt install -y \
+RUN apk add --no-cache \
   git \
   wget \
   tar \
   && mkdir -p /src/kea \
   && wget -O - https://ftp.isc.org/isc/kea/1.9.9/kea-1.9.9.tar.gz | tar xz -C /src/kea --strip-components=1
 
-RUN apt install -y \
-  build-essential \
+RUN apk add --no-cache \
+  build-base \
   bison \
-  botan \
+  botan-dev \
   flex \
-  libssl-dev \
-  libcap-dev \
-  libboost-dev \
-  libboost-filesystem-dev \
-  liblog4cplus-dev \
-  postgresql-server-dev-all \
+  libcap \
+  boost-dev \
+  log4cplus-dev \
+  mariadb-dev \
+  postgresql-dev \
   python3-dev
 
 WORKDIR /src/kea
@@ -41,17 +38,19 @@ RUN ./configure \
   && make -j$(nproc) \
   && make DESTDIR=/tmp/out install
 
-FROM ubuntu:21.04
+FROM alpine
 COPY --from=builder /tmp/out /
 COPY --from=registry.gitlab.isc.org/isc-projects/stork/agent-kea:latest /agent/stork-agent /usr/sbin/stork-agent
 
-ENV DEBIAN_FRONTEND noninteractive
+RUN apk add --no-cache \
+  libgcc \
+  musl \
+  libstdc++ \
+  mariadb-connector-c \
+  mariadb-client \
+  postgresql-client \
+  libpq \
+  botan-libs \
+  log4cplus
 
-RUN apt update \
-  && apt install -y \
-    libssl \
-    musl \
-    libstdc++ \
-    postgresql-client \
-    libpq \
-    botan-libs
+ENTRYPOINT [ "/usr/sbin/kea-dhcp4" ]
