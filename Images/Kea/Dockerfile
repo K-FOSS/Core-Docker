@@ -1,6 +1,5 @@
 FROM alpine as builder
 
-
 RUN apk add --no-cache \
   git \
   wget \
@@ -40,16 +39,17 @@ RUN ./configure \
   && make DESTDIR=/tmp/out install
 
 FROM alpine
+COPY --from=builder /tmp/out /
+
 RUN apk add --no-cache \
   libgcc \
   musl \
   libstdc++ \
   mariadb-connector-c \
   mariadb-client \
+  postgresql-client \
   libpq \
   botan-libs \
   log4cplus
-
-COPY --from=builder /tmp/out /
 
 ENTRYPOINT [ "/usr/sbin/kea-dhcp4" ]
