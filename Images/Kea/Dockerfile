@@ -40,6 +40,7 @@ RUN ./configure \
 
 FROM alpine
 COPY --from=builder /tmp/out /
+COPY --from=registry.gitlab.isc.org/isc-projects/stork/agent-kea:latest /agent/stork-agent /usr/sbin/stork-agent
 
 RUN apk add --no-cache \
   libgcc \
