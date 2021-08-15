@@ -34,6 +34,8 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: ./Images/Web
+          cache-from: type=registry,ref=kristianfjones/caddy-core-docker:vps1
+          cache-to: type=inline
           platforms: linux/amd64,linux/arm64
           push: true
           tags: kristianfjones/caddy-core-docker:vps1
