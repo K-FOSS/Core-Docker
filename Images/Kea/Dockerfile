@@ -32,7 +32,7 @@ RUN ./configure \
 	--localstatedir=/var \
 	--libexecdir=/usr/lib \
 	--runstatedir=/run \
-	--with-mysql \
+	--without-mysql \
 	--with-pgsql \
 	--disable-rpath \
 	--enable-generate-messages \
