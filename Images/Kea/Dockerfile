@@ -49,9 +49,6 @@ ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt update \
   && apt install -y \
-    libssl \
-    musl \
-    libstdc++ \
-    postgresql-client \
-    libpq \
-    botan-libs
+    libpq5 \
+    botan \
+    postgresql-client-13
