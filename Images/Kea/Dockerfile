@@ -42,7 +42,7 @@ RUN ./configure \
   && make DESTDIR=/tmp/out install
 
 FROM ubuntu:21.04
-COPY --from=builder /tmp/out /
+COPY --from=0 /tmp/out /
 COPY --from=registry.gitlab.isc.org/isc-projects/stork/agent-kea:latest /agent/stork-agent /usr/sbin/stork-agent
 
 ENV DEBIAN_FRONTEND noninteractive
