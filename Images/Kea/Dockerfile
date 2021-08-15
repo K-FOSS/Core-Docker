@@ -51,4 +51,5 @@ RUN apt update \
   && apt install -y \
     libpq5 \
     botan \
-    postgresql-client-13
+    postgresql-client-13 \
+    liblog4cplus-2.0.5
