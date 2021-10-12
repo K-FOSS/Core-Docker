@@ -41,6 +41,18 @@ jobs:
           tags: kristianfjones/coredns-docker:core0
 
       - name: Build and push
+        id: keadhcp_build
+        if: ${{ github.ref == 'refs/heads/main' }}
+        uses: docker/build-push-action@v2
+        with:
+          context: ./Images/Kea
+          cache-from: type=registry,ref=kristianfjones/kea:vps1-core
+          cache-to: type=inline
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: kristianfjones/kea:vps1-core
+
+      - name: Build and push
         id: docker_build
         if: ${{ github.ref == 'refs/heads/main' }}
         uses: docker/build-push-action@v2
@@ -62,18 +74,6 @@ jobs:
           cache-to: type=inline
           push: true
           tags: kristianfjones/mariadb:vps1-core
-
-      - name: Build and push
-        id: keadhcp_build
-        if: ${{ github.ref == 'refs/heads/main' }}
-        uses: docker/build-push-action@v2
-        with:
-          context: ./Images/Kea
-          cache-from: type=registry,ref=kristianfjones/kea:vps1-core
-          cache-to: type=inline
-          platforms: linux/amd64,linux/arm64
-          push: true
-          tags: kristianfjones/kea:vps1-core
 
       - name: Build and push
         id: keaadmin_build
