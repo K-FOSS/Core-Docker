@@ -7,7 +7,7 @@ RUN apt update && apt install -y \
   wget \
   tar \
   && mkdir -p /src/kea \
-  && wget -O - https://ftp.isc.org/isc/kea/1.9.9/kea-1.9.9.tar.gz | tar xz -C /src/kea --strip-components=1
+  && wget -O - https://ftp.isc.org/isc/kea/2.0.0/kea-2.0.0.tar.gz | tar xz -C /src/kea --strip-components=1
 
 RUN apt install -y \
   build-essential \
