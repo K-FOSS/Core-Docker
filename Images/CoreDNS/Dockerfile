@@ -12,6 +12,8 @@ WORKDIR /go/coredns
 COPY ./plugin.cfg ./plugin.add.cfg 
 RUN cat ./plugin.add.cfg >>./plugin.cfg
 
+RUN make
+
 FROM scratch
 COPY --from=builder /go/coredns/coredns /coredns
 
