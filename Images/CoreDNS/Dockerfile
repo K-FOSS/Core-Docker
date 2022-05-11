@@ -17,7 +17,7 @@ RUN cat ./plugin.add.cfg >>./plugin.cfg
 RUN make -f Makefile.release release
 
 FROM scratch
-COPY --from=builder /go/coredns/coredns /coredns
+COPY --from=builder /src/github.com/coredns/build/linux/amd64/coredns /coredns
 
 COPY --from=certs  /etc/ssl/certs /etc/ssl/certs
 
