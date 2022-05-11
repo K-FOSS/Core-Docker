@@ -4,6 +4,8 @@ RUN apt-get update && apt-get -uy upgrade
 RUN apt-get -y install ca-certificates && update-ca-certificates
 
 FROM golang:bullseye as builder
+ARG TARGETPLATFORM
+ENV LINUX_ARCH=$TARGETPLATFORM
 
 WORKDIR /src/github.com
 RUN apt update \
