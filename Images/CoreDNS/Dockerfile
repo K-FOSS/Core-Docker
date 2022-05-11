@@ -19,7 +19,7 @@ RUN cat ./plugin.add.cfg >>./plugin.cfg
 RUN echo "Platform ${LINUX_ARCH}" \
   && printenv \
   && mkdir -p build/linux/${TARGETARCH} \
-  && CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -ldflags="-s -w -X 092c1444" -o build/linux/${TARGETARCH}/coredns 
+  && CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -ldflags="-s -w -X github.com/coredns/coredns/coremain.GitCommit=092c1444-dirty" -o build/linux/${TARGETARCH}/coredns 
 
 FROM scratch
 ARG TARGETARCH
