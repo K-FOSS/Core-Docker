@@ -18,12 +18,13 @@ RUN cat ./plugin.add.cfg >>./plugin.cfg
 
 RUN echo "Platform ${LINUX_ARCH}" \
   && printenv \
-  && mkdir -p build/linux/${TARGETPLATFORM} \
-  && CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -ldflags="-s -w -X 092c1444" -o build/linux/${TARGETPLATFORM}/coredns 
+  && mkdir -p build/linux/${TARGETARCH} \
+  && CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -ldflags="-s -w -X 092c1444" -o build/linux/${TARGETARCH}/coredns 
 
 FROM scratch
-ARG TARGETPLATFORM
-COPY --from=builder /src/github.com/coredns/build/linux/${TARGETPLATFORM}/coredns /coredns
+ARG TARGETARCH
+
+COPY --from=builder /src/github.com/coredns/build/linux/${TARGETARCH}/coredns /coredns
 
 COPY --from=certs  /etc/ssl/certs /etc/ssl/certs
 
