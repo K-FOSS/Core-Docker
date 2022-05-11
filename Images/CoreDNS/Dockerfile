@@ -13,12 +13,16 @@ RUN apt update \
     && git clone https://github.com/coredns/coredns.git
 
 WORKDIR /src/github.com/coredns
-COPY ./plugin.cfg ./plugin.add.cfg 
-RUN cat ./plugin.add.cfg >>./plugin.cfg
+RUN ls -lah \
+  && cat plugin.cfg
+
+COPY ./plugin.cfg ./plugin.cfg
 
 RUN echo "Platform ${LINUX_ARCH}" \
   && printenv \
+  && cat plugin.cfg \
   && mkdir -p build/linux/${TARGETARCH} \
+  && make gen \
   && CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -ldflags="-s -w -X github.com/coredns/coredns/coremain.GitCommit=092c1444-dirty" -o build/linux/${TARGETARCH}/coredns 
 
 FROM scratch
