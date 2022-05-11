@@ -14,7 +14,7 @@ WORKDIR /src/github.com/coredns
 COPY ./plugin.cfg ./plugin.add.cfg 
 RUN cat ./plugin.add.cfg >>./plugin.cfg
 
-RUN make
+RUN make -f Makefile.release release
 
 FROM scratch
 COPY --from=builder /go/coredns/coredns /coredns
