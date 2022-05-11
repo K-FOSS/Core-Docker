@@ -4,8 +4,8 @@ RUN apt-get update && apt-get -uy upgrade
 RUN apt-get -y install ca-certificates && update-ca-certificates
 
 FROM golang:bullseye as builder
-ARG TARGETPLATFORM
-ENV LINUX_ARCH=$TARGETPLATFORM
+ARG TARGETOS
+ARG TARGETARCH
 
 WORKDIR /src/github.com
 RUN apt update \
@@ -19,7 +19,7 @@ RUN cat ./plugin.add.cfg >>./plugin.cfg
 RUN echo "Platform ${LINUX_ARCH}" \
   && printenv \
   && mkdir -p build/linux/${TARGETPLATFORM} \
-  && CGO_ENABLED=0 GOOS=linux GOARCH=${TARGETPLATFORM} go build -ldflags="-s -w -X 092c1444" -o build/linux/${TARGETPLATFORM}/coredns 
+  && CGO_ENABLED=0 GOOS=${TARGETOS} GOARCH=${TARGETARCH} go build -ldflags="-s -w -X 092c1444" -o build/linux/${TARGETPLATFORM}/coredns 
 
 FROM scratch
 ARG TARGETPLATFORM
