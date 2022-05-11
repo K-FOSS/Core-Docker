@@ -16,10 +16,13 @@ WORKDIR /src/github.com/coredns
 COPY ./plugin.cfg ./plugin.add.cfg 
 RUN cat ./plugin.add.cfg >>./plugin.cfg
 
-RUN make -f Makefile.release release
+RUN mkdir -p build/linux/arm64 \
+  && \
+  && CGO_ENABLED=0 GOOS=linux GOARCH=${TARGETPLATFORM} go build -ldflags="-s -w -X 092c1444" -o build/linux/${TARGETPLATFORM}/coredns 
 
 FROM scratch
-COPY --from=builder /src/github.com/coredns/build/linux/amd64/coredns /coredns
+ARG TARGETPLATFORM
+COPY --from=builder /src/github.com/coredns/build/linux/${TARGETPLATFORM}/coredns /coredns
 
 COPY --from=certs  /etc/ssl/certs /etc/ssl/certs
 
