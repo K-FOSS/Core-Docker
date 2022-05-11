@@ -4,11 +4,13 @@ RUN apt-get update && apt-get -uy upgrade
 RUN apt-get -y install ca-certificates && update-ca-certificates
 
 FROM golang:bullseye as builder
+
+WORKDIR /src/github.com
 RUN apt update \
     && apt install -y git \
     && git clone https://github.com/coredns/coredns.git
 
-WORKDIR /go/coredns
+WORKDIR /src/github.com/coredns
 COPY ./plugin.cfg ./plugin.add.cfg 
 RUN cat ./plugin.add.cfg >>./plugin.cfg
 
