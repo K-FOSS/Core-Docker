@@ -16,7 +16,9 @@ WORKDIR /src/github.com/coredns
 COPY ./plugin.cfg ./plugin.add.cfg 
 RUN cat ./plugin.add.cfg >>./plugin.cfg
 
-RUN mkdir -p build/linux/${TARGETPLATFORM} \
+RUN echo "Platform ${LINUX_ARCH}" \
+  && printenv \
+  && mkdir -p build/linux/${TARGETPLATFORM} \
   && CGO_ENABLED=0 GOOS=linux GOARCH=${TARGETPLATFORM} go build -ldflags="-s -w -X 092c1444" -o build/linux/${TARGETPLATFORM}/coredns 
 
 FROM scratch
