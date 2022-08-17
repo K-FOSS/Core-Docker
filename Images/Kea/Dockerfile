@@ -1,13 +1,13 @@
-FROM ubuntu:21.04
+FROM ubuntu:22.04
 
-ENV DEBIAN_FRONTEND noninteractive
-
-RUN apt update && apt install -y \
+RUN sed -i -e 's/^APT/# APT/' -e 's/^DPkg/# DPkg/' \
+      /etc/apt/apt.conf.d/docker-clean \
+  && apt update && apt install -y \
   git \
   wget \
   tar \
   && mkdir -p /src/kea \
-  && wget -O - https://ftp.isc.org/isc/kea/2.1.4/kea-2.1.4.tar.gz | tar xz -C /src/kea --strip-components=1
+  && wget -O - https://ftp.isc.org/isc/kea/2.2.0/kea-2.2.0.tar.gz | tar xz -C /src/kea --strip-components=1
 
 RUN apt install -y \
   build-essential \
@@ -41,13 +41,15 @@ RUN ./configure \
   && make -j$(nproc) \
   && make DESTDIR=/tmp/out install
 
-FROM ubuntu:21.04
+FROM ubuntu:jammy-20220101
 COPY --from=0 /tmp/out /
 COPY --from=registry.gitlab.isc.org/isc-projects/stork/agent-kea:latest /agent/stork-agent /usr/sbin/stork-agent
 
 ENV DEBIAN_FRONTEND noninteractive
 
-RUN apt update \
+RUN sed -i -e 's/^APT/# APT/' -e 's/^DPkg/# DPkg/' \
+      /etc/apt/apt.conf.d/docker-clean \
+  && apt update \
   && apt install -y \
     libpq5 \
     botan \
