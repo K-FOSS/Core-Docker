@@ -41,9 +41,8 @@ RUN ./configure \
   && make -j$(nproc) \
   && make DESTDIR=/tmp/out install
 
-FROM ubuntu:jammy-20220101
+FROM ubuntu:22.04
 COPY --from=0 /tmp/out /
-COPY --from=registry.gitlab.isc.org/isc-projects/stork/agent-kea:latest /agent/stork-agent /usr/sbin/stork-agent
 
 ENV DEBIAN_FRONTEND noninteractive
 
@@ -53,5 +52,6 @@ RUN sed -i -e 's/^APT/# APT/' -e 's/^DPkg/# DPkg/' \
   && apt install -y \
     libpq5 \
     botan \
+    wget \
     postgresql-client-13 \
     liblog4cplus-2.0.5
