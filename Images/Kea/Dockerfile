@@ -7,7 +7,7 @@ RUN sed -i -e 's/^APT/# APT/' -e 's/^DPkg/# DPkg/' \
   wget \
   tar \
   && mkdir -p /src/kea \
-  && wget -O - https://ftp.isc.org/isc/kea/2.2.0/kea-2.2.0.tar.gz | tar xz -C /src/kea --strip-components=1
+  && wget -O - https://ftp.isc.org/isc/kea/2.1.4/kea-2.1.4.tar.gz | tar xz -C /src/kea --strip-components=1
 
 RUN apt install -y \
   build-essential \
