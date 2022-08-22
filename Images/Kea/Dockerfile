@@ -53,5 +53,6 @@ RUN sed -i -e 's/^APT/# APT/' -e 's/^DPkg/# DPkg/' \
     libpq5 \
     botan \
     wget \
+    curl \
     postgresql-client-13 \
     liblog4cplus-2.0.5
