@@ -2,7 +2,7 @@
 status=$(keactrl status | grep "DHCPv4 server" | awk '{print $3}')
 
 if [[ "${status}" == "active" ]]; then
-  return 0
+  exit 0
 else
-  return 1 
+  exit 1 
 fi
