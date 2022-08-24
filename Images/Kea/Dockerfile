@@ -41,6 +41,8 @@ RUN ./configure \
   && make -j$(nproc) \
   && make DESTDIR=/tmp/out install
 
+COPY ./Healthcheck.sh /tmp/out/Healthcheck.sh
+
 FROM ubuntu:22.04
 COPY --from=0 /tmp/out /
 
