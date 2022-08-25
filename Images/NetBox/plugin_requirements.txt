@@ -1,2 +1,3 @@
 netbox-lists
 git+https://github.com/ryanmerolle/netbox-access-lists.git@dev
+netbox-ipcalculator
