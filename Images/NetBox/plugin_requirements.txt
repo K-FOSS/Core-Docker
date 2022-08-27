@@ -4,3 +4,4 @@ netbox-ipcalculator
 netbox-topology-views
 netbox-plugin-device-map
 phonebox_plugin
+netbox-gateways
