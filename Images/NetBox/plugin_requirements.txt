@@ -8,3 +8,4 @@ netbox-gateways
 nb-service
 netbox-dns
 netbox-ddns
+netbox-bgp
