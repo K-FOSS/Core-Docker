@@ -1,5 +1,6 @@
 netbox-lists
 git+https://github.com/Onemind-Services-LLC/netbox-access-lists1.git@dev
+git+https://github.com/sjm-steffann/netbox-ddns.git@main
 netbox-ipcalculator
 netbox-topology-views
 netbox-plugin-device-map
@@ -7,5 +8,4 @@ phonebox_plugin
 netbox-gateways
 nb-service
 netbox-dns
-netbox-ddns
 netbox-bgp
