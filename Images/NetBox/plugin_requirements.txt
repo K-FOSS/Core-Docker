@@ -1,5 +1,5 @@
 netbox-lists
-git+https://github.com/ryanmerolle/netbox-access-lists.git@dev
+git+https://github.com/Onemind-Services-LLC/netbox-access-lists1.git@dev
 netbox-ipcalculator
 netbox-topology-views
 netbox-plugin-device-map
