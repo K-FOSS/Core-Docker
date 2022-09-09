@@ -8,4 +8,4 @@ phonebox_plugin
 netbox-gateways
 nb-service
 netbox-dns
-netbox-bgp
+git+https://github.com/kvedder-amplex/netbox-bgp.git@main
