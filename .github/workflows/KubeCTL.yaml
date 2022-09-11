@@ -1,0 +1,49 @@
+name: kubectl
+
+on:
+  push:
+    branches:
+      - main
+
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron:  '30 5,17 * * *'
+
+jobs:
+  docker:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        version: [v0.24.4, v0.23.10]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Set up QEMU
+        uses: docker/setup-qemu-action@v1
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Login to DockerHub
+        uses: docker/login-action@v1 
+        with:
+          username: ${{ secrets.DH_USER }}
+          password: ${{ secrets.DH_TOKEN }}
+
+      - name: Build and push
+        id: kubectl_build
+        if: ${{ github.ref == 'refs/heads/main' }}
+        uses: docker/build-push-action@v3.1.1
+        with:
+          context: ./Images/KubeCTL
+          cache-from: type=registry,ref=kristianfjones/kubectl:${{ matrix.version }}
+          cache-to: type=inline
+          platforms: linux/amd64,linux/arm64
+
+          build-args:
+            VERSION: ${{ matrix.version }}
+
+          push: true
+          tags: kristianfjones/kubectl:${{ matrix.version }}
