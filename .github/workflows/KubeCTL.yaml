@@ -42,8 +42,7 @@ jobs:
           cache-to: type=inline
           platforms: linux/amd64,linux/arm64
 
-          build-args:
-            - VERSION=${{ matrix.version }}
+          build-args: 'VERSION=${{ matrix.version }}'
 
           push: true
           tags: kristianfjones/kubectl:${{ matrix.version }}
