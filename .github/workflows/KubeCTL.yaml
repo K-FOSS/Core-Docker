@@ -38,12 +38,12 @@ jobs:
         uses: docker/build-push-action@v3.1.1
         with:
           context: ./Images/KubeCTL
-          cache-from: 'type=registry,ref=kristianfjones/kubectl:${{ matrix.version }}'
+          cache-from: type=registry,ref=kristianfjones/kubectl:${{ matrix.version }}
           cache-to: type=inline
           platforms: linux/amd64,linux/arm64
 
           build-args:
-            VERSION: '${{ matrix.version }}'
+            - VERSION=${{ matrix.version }}
 
           push: true
-          tags: 'kristianfjones/kubectl:${{ matrix.version }}'
+          tags: kristianfjones/kubectl:${{ matrix.version }}
