@@ -9,4 +9,3 @@ netbox-gateways
 git+https://github.com/KristineFJ/nbservice.git@fix-3.3
 netbox-dns
 git+https://github.com/kvedder-amplex/netbox-bgp.git@main
-netbox-maintenancecontract-plugin
