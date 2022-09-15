@@ -1,4 +1,4 @@
-FROM netboxcommunity/netbox:snapshot
+FROM netboxcommunity/netbox:v3.3-2.2.0
 
 RUN apt-get update -qq \
   && apt-get install \
