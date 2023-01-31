@@ -35,7 +35,7 @@ jobs:
       - name: Build and push
         id: kubectl_build
         if: ${{ github.ref == 'refs/heads/main' }}
-        uses: docker/build-push-action@v3.1.1
+        uses: docker/build-push-action@v4.0.0
         with:
           context: ./Images/KubeCTL
           cache-from: type=registry,ref=kristianfjones/kubectl:${{ matrix.version }}

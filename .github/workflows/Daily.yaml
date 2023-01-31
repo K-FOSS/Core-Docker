@@ -31,7 +31,7 @@ jobs:
       # - name: Build and push
       #   id: idracexporter_build
       #   if: ${{ github.ref == 'refs/heads/main' }}
-      #   uses: docker/build-push-action@v3.1.1
+      #   uses: docker/build-push-action@v4.0.0
       #   with:
       #     context: ./Images/iDRACExporter
       #     cache-from: type=registry,ref=kristianfjones/idracexporter-docker:core0
@@ -43,7 +43,7 @@ jobs:
       - name: Build and push
         id: gobetween_build
         if: ${{ github.ref == 'refs/heads/main' }}
-        uses: docker/build-push-action@v3.1.1
+        uses: docker/build-push-action@v4.0.0
         with:
           context: ./Images/GoBetween
           cache-from: type=registry,ref=kristianfjones/gobetween-docker:core0
@@ -55,7 +55,7 @@ jobs:
       # - name: Build and push
       #   id: hyperglass_build
       #   if: ${{ github.ref == 'refs/heads/main' }}
-      #   uses: docker/build-push-action@v3.1.1
+      #   uses: docker/build-push-action@v4.0.0
       #   with:
       #     context: ./Images/HyperGlass
       #     cache-from: type=registry,ref=kristianfjones/hyperglass-docker:core0
@@ -67,7 +67,7 @@ jobs:
       - name: Build and push
         id: pgexporter_build
         if: ${{ github.ref == 'refs/heads/main' }}
-        uses: docker/build-push-action@v3.1.1
+        uses: docker/build-push-action@v4.0.0
         with:
           context: ./Images/PGExporter
           cache-from: type=registry,ref=kristianfjones/pgexporter-docker:core0
@@ -79,7 +79,7 @@ jobs:
       - name: Build and push
         id: dns_build
         if: ${{ github.ref == 'refs/heads/main' }}
-        uses: docker/build-push-action@v3.1.1
+        uses: docker/build-push-action@v4.0.0
         with:
           context: ./Images/CoreDNS
           cache-from: type=registry,ref=kristianfjones/coredns-docker:core0
@@ -91,7 +91,7 @@ jobs:
       - name: Build and push
         id: ipamnetbox_build
         if: ${{ github.ref == 'refs/heads/main' }}
-        uses: docker/build-push-action@v3.1.1
+        uses: docker/build-push-action@v4.0.0
         with:
           context: ./Images/NetBox
           cache-from: type=registry,ref=kristianfoss/netbox:core
@@ -103,7 +103,7 @@ jobs:
       - name: Build and push
         id: keadhcp_build
         if: ${{ github.ref == 'refs/heads/main' }}
-        uses: docker/build-push-action@v3.1.1
+        uses: docker/build-push-action@v4.0.0
         with:
           context: ./Images/Kea
           cache-from: type=registry,ref=kristianfjones/kea:vps1-core
@@ -115,7 +115,7 @@ jobs:
       # - name: Build and push
       #   id: docker_build
       #   if: ${{ github.ref == 'refs/heads/main' }}
-      #   uses: docker/build-push-action@v3.1.1
+      #   uses: docker/build-push-action@v4.0.0
       #   with:
       #     context: ./Images/Web
       #     cache-from: type=registry,ref=kristianfjones/caddy-core-docker:vps1
@@ -127,7 +127,7 @@ jobs:
       - name: Build and push
         id: mariadbd_build
         if: ${{ github.ref == 'refs/heads/main' }}
-        uses: docker/build-push-action@v3.1.1
+        uses: docker/build-push-action@v4.0.0
         with:
           context: ./Images/MariaDB
           cache-from: type=registry,ref=kristianfjones/mariadb:vps1-core
@@ -138,7 +138,7 @@ jobs:
       - name: Build and push
         id: keaadmin_build
         if: ${{ github.ref == 'refs/heads/main' }}
-        uses: docker/build-push-action@v3.1.1
+        uses: docker/build-push-action@v4.0.0
         with:
           context: ./Images/KeaAdmin
           push: true
@@ -147,7 +147,7 @@ jobs:
       - name: Build and push
         id: asterisk_build
         if: ${{ github.ref == 'refs/heads/main' }}
-        uses: docker/build-push-action@v3.1.1
+        uses: docker/build-push-action@v4.0.0
         with:
           context: ./Images/Asterisk
           push: true
@@ -156,7 +156,7 @@ jobs:
       # - name: Build and push
       #   id: enms_build
       #   if: ${{ github.ref == 'refs/heads/main' }}
-      #   uses: docker/build-push-action@v3.1.1
+      #   uses: docker/build-push-action@v4.0.0
       #   with:
       #     context: ./Images/eNMS
       #     push: true
