@@ -145,6 +145,15 @@ jobs:
           tags: kristianfjones/kea:vps1-admin
 
       - name: Build and push
+        id: netboxdhcp_build
+        if: ${{ github.ref == 'refs/heads/main' }}
+        uses: docker/build-push-action@v3.1.1
+        with:
+          context: ./Images/NetboxDHCP
+          push: true
+          tags: kristianfjones/netbox-dhcp:main
+
+      - name: Build and push
         id: asterisk_build
         if: ${{ github.ref == 'refs/heads/main' }}
         uses: docker/build-push-action@v3.1.1
