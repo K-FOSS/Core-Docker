@@ -43,7 +43,7 @@ RUN ./configure \
 
 COPY ./Healthcheck.sh /tmp/out/Healthcheck.sh
 
-FROM ubuntu:latest
+FROM docker.io/library/ubuntu:22.04
 COPY --from=build /tmp/out /
 
 ENV DEBIAN_FRONTEND noninteractive
