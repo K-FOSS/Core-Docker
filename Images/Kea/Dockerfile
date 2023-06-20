@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM docker.io/library/ubuntu:22.04
 
 RUN sed -i -e 's/^APT/# APT/' -e 's/^DPkg/# DPkg/' \
       /etc/apt/apt.conf.d/docker-clean \
