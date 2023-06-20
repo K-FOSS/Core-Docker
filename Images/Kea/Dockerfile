@@ -43,7 +43,7 @@ RUN ./configure \
 
 COPY ./Healthcheck.sh /tmp/out/Healthcheck.sh
 
-FROM ubuntu:22.04
+FROM ubuntu:latest
 COPY --from=0 /tmp/out /
 
 ENV DEBIAN_FRONTEND noninteractive
