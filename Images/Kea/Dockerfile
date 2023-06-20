@@ -1,5 +1,5 @@
 # syntax=docker/dockerfile:1
-FROM docker.io/library/ubuntu:latest AS build
+FROM ubuntu:22.04 AS build
 
 RUN sed -i -e 's/^APT/# APT/' -e 's/^DPkg/# DPkg/' \
       /etc/apt/apt.conf.d/docker-clean \
@@ -44,7 +44,7 @@ RUN ./configure \
 
 COPY ./Healthcheck.sh /tmp/out/Healthcheck.sh
 
-FROM docker.io/library/ubuntu:22.04
+FROM ubuntu:22.04
 COPY --from=build /tmp/out /
 
 ENV DEBIAN_FRONTEND noninteractive
