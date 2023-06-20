@@ -6,6 +6,6 @@ netbox-plugin-device-map
 phonebox_plugin
 netbox-gateways
 git+https://github.com/KristineFJ/nbservice.git@fix-3.3
-netbox-dns
+netbox-plugin-dns
 netbox-bgp
 netbox_kea
