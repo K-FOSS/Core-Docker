@@ -5,7 +5,12 @@ netbox-topology-views
 netbox-plugin-device-map
 phonebox_plugin
 netbox-gateways
-git+https://github.com/KristineFJ/nbservice.git@fix-3.3
+nb-service
 netbox-plugin-dns
 netbox-bgp
 netbox_kea
+netbox-data-flows
+netbox-tunnels2
+netbox-inventory
+netbox-contract
+netbox-slm
