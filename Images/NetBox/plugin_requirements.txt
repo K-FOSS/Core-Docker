@@ -14,3 +14,4 @@ netbox-tunnels2
 netbox-inventory
 netbox-contract
 netbox-slm
+netbox-routing
