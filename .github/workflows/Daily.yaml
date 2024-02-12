@@ -31,7 +31,7 @@ jobs:
       - name: Build and push
         id: pgpool_build
         if: ${{ github.ref == 'refs/heads/main' }}
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v5.1.0
         with:
           context: ./Images/PGPool
           cache-from: type=registry,ref=kristianfjones/pgpool:latest
@@ -79,7 +79,7 @@ jobs:
       - name: Build and push
         id: pgexporter_build
         if: ${{ github.ref == 'refs/heads/main' }}
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v5.1.0
         with:
           context: ./Images/PGExporter
           cache-from: type=registry,ref=kristianfjones/pgexporter-docker:core0
@@ -91,7 +91,7 @@ jobs:
       - name: Build and push
         id: dns_build
         if: ${{ github.ref == 'refs/heads/main' }}
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v5.1.0
         with:
           context: ./Images/CoreDNS
           cache-from: type=registry,ref=kristianfjones/coredns-docker:core0
@@ -103,7 +103,7 @@ jobs:
       - name: Build and push
         id: ipamnetbox_build
         if: ${{ github.ref == 'refs/heads/main' }}
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v5.1.0
         with:
           context: ./Images/NetBox
           cache-from: type=registry,ref=kristianfoss/netbox:core
@@ -115,7 +115,7 @@ jobs:
       - name: Build and push
         id: keadhcp_build
         if: ${{ github.ref == 'refs/heads/main' }}
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v5.1.0
         with:
           context: ./Images/Kea
           cache-from: type=registry,ref=kristianfjones/kea:vps1-core
@@ -150,7 +150,7 @@ jobs:
       - name: Build and push
         id: keaadmin_build
         if: ${{ github.ref == 'refs/heads/main' }}
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v5.1.0
         with:
           context: ./Images/KeaAdmin
           push: true
@@ -159,7 +159,7 @@ jobs:
       - name: Build and push
         id: netboxdhcp_build
         if: ${{ github.ref == 'refs/heads/main' }}
-        uses: docker/build-push-action@v4
+        uses: docker/build-push-action@v5.1.0
         with:
           context: ./Images/NetboxDHCP
           push: true
