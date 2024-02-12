@@ -80,6 +80,7 @@ RUN apk add --no-cache \
         bash \
         postgresql \
         openssl \
+        openldap-dev \
     && mkdir -p /var/run \
     && mkdir -p /opt/pgpool-II
 
