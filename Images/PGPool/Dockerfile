@@ -1,4 +1,4 @@
-FROM alpine:3.17 as builder
+FROM alpine:3.17 AS builder
 
 ENV PGPOOL_INSTALL_DIR /opt/pgpool-II
 ENV PGPOOL_CONF_VOLUME /config
