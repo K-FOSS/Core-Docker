@@ -1,16 +1,7 @@
 FROM alpine:3.17 as builder
 
-ARG PGPOOL_VER
-
 ENV PGPOOL_INSTALL_DIR /opt/pgpool-II
 ENV PGPOOL_CONF_VOLUME /config
-
-# Create postgres user used to start Pgpool-II
-RUN set -ex; \ 
-    addgroup -g 70 -S postgres; \
-    adduser -u 70 -S -D -G postgres -H -h /var/lib/pgsql -s /bin/sh postgres; \
-    mkdir -p /var/lib/pgsql; \
-    chown -R postgres:postgres /var/lib/pgsql
 
 # Install packages
 RUN set -eux \
@@ -58,17 +49,21 @@ RUN set -eux \
     \
     && mkdir -p /tmp/out/var/run/pgpool \
     && mkdir -p /tmp/out/var/run/postgresql \
-    && mkdir -p /tmp/out/${PGPOOL_INSTALL_DIR} \
-    && chown -R postgres:postgres /tmp/out/var/run/pgpool /tmp/out/var/run/postgresql /tmp/out/${PGPOOL_INSTALL_DIR}
+    && mkdir -p /tmp/out${PGPOOL_INSTALL_DIR} \
+    && chown -R postgres:postgres /tmp/out/var/run/pgpool /tmp/out/var/run/postgresql /tmp/out${PGPOOL_INSTALL_DIR}
 
 RUN set -eux \
     \
     && apk del --purge  --rdepends fetch-dependencies build-dependencies
 
 COPY entrypoint.sh /tmp/out${PGPOOL_INSTALL_DIR}/bin/
-COPY start.sh /tmp/out/${PGPOOL_INSTALL_DIR}/bin/
+COPY start.sh /tmp/out${PGPOOL_INSTALL_DIR}/bin/
+
 
 FROM alpine:latest
+
+ENV PGPOOL_INSTALL_DIR /opt/pgpool-II
+ENV PGPOOL_CONF_VOLUME /config
 
 # Create postgres user used to start Pgpool-II
 RUN set -ex; \ 
