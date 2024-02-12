@@ -28,6 +28,18 @@ jobs:
           username: ${{ secrets.DH_USER }}
           password: ${{ secrets.DH_TOKEN }}
 
+      - name: Build and push
+        id: pgpool_build
+        if: ${{ github.ref == 'refs/heads/main' }}
+        uses: docker/build-push-action@v4
+        with:
+          context: ./Images/PGPool
+          cache-from: type=registry,ref=kristianfjones/pgexporter-docker:core0
+          cache-to: type=inline
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: kristianfjones/pgpool:latest
+
       # - name: Build and push
       #   id: idracexporter_build
       #   if: ${{ github.ref == 'refs/heads/main' }}

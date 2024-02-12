@@ -1,0 +1,11 @@
+schemaVersion: 2.2.0
+metadata:
+  name: core-docker-devs
+
+components:
+  - name: devtools
+    container:
+      image: quay.io/devfile/universal-developer-image:latest
+      env:
+        - name: KUBEDOCK_ENABLED
+          value: 'true'
