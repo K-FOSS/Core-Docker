@@ -3,6 +3,8 @@ FROM alpine:3.17 AS builder
 ENV PGPOOL_INSTALL_DIR /opt/pgpool-II
 ENV PGPOOL_CONF_VOLUME /config
 
+WORKDIR /tmp/pgpool
+
 # Install packages
 RUN set -eux \
     \
@@ -61,6 +63,8 @@ COPY start.sh /tmp/out${PGPOOL_INSTALL_DIR}/bin/
 
 
 FROM alpine:latest
+
+WORKDIR /
 
 ENV PGPOOL_INSTALL_DIR /opt/pgpool-II
 ENV PGPOOL_CONF_VOLUME /config
