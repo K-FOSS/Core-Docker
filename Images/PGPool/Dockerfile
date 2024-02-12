@@ -75,7 +75,9 @@ RUN set -ex; \
 RUN apk add --no-cache \
         bash \
         postgresql \
-        openssl
+        openssl \
+    && mkdir -p /var/run \
+    && mkdir -p /opt/pgpool-II
 
 COPY --from=builder /tmp/out /
 
