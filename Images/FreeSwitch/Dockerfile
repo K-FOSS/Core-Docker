@@ -76,14 +76,17 @@ RUN set -eux \
         sed \
         sudo
 
-RUN export VERSION=$$(wget -O - -q https://files.freeswitch.org/freeswitch-releases/ | ack -o '	freeswitch-\d{1,2}\.\d{1,2}\.\d{1,2}' | tail -1) \
-    && wget -O - https://files.freeswitch.org/freeswitch-releases/$${VERSION}.tar.gz | tar xz -C /src/freeswitch --strip-components=1
+RUN export VERSION=$(wget -O - -q https://files.freeswitch.org/freeswitch-releases/ | ack -o 'freeswitch-\d{1,2}\.\d{1,2}\.\d{1,2}' | tail -1) \
+    && echo "Getting https://files.freeswitch.org/freeswitch-releases/${VERSION}.-release.tar.xz" \
+    && mkdir -p /src/freeswitch \
+    && wget -O - https://files.freeswitch.org/freeswitch-releases/${VERSION}.-release.tar.gz | tar xz -C /src/freeswitch --strip-components=1
 
 WORKDIR /src/freeswitch
 
+COPY ./modules.conf /src/freeswitch/modules.conf
+
 RUN ls -lah \
   && ./configure \
-    --help \
 		--build=$CBUILD \
 		--host=$CHOST \
 		--prefix=/usr \
@@ -95,7 +98,12 @@ RUN ls -lah \
 		--infodir=/usr/share/info \
 		--with-devrandom=/dev/urandom \
 		--with-python3 \
+        --with-ldap \
 		--disable-debug \
 		--enable-core-pgsql-support \
 		--enable-system-lua \
-		--enable-system-xmlrpc-c
+		--enable-system-xmlrpc-c \
+  && make libs/libvpx/libvpx.a \
+  && make src/include/switch_version.h src/include/switch_swigable_cpp.h \
+  && make libfreeswitch.la \
+  && make all
