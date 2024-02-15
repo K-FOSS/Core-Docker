@@ -131,4 +131,7 @@ FROM alpine:latest
 
 COPY --from=builder /tmp/out/etc /etc
 COPY --from=builder /tmp/out/usr /usr
+
+RUN mkdir -p /var/run
+
 COPY --from=builder /tmp/out/var /var
