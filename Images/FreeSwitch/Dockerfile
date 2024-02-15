@@ -69,6 +69,7 @@ RUN set -eux \
         autoconf \
         freeradius \
         freeradius-lib \
+        h2o-dev \
 
     \
     && apk add --no-cache \
