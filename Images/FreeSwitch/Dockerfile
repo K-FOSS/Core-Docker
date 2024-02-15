@@ -88,11 +88,13 @@ COPY ./modules.conf /src/freeswitch/modules.conf
 COPY ./python-3.10.patch /src/freeswitch/python-3.10.patch
 COPY ./getlib.patch /src/freeswitch/getlib.patch
 COPY ./libvpx-fix-arm-float-abi.patch /src/freeswitch/libvpx-fix-arm-float-abi.patch
+COPY ./disable-Werror.patch /src/freeswitch/disable-Werror.patch
 
 RUN ls -lah \
   && patch -p1 < python-3.10.patch \
   && patch -p1 < getlib.patch \
   && patch -p1 < libvpx-fix-arm-float-abi.patch \
+  && patch -p1 < disable-Werror.patch \
   && ./configure \
 		--build=$CBUILD \
 		--host=$CHOST \
