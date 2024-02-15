@@ -66,6 +66,7 @@ RUN set -eux \
         util-linux-dev \
         xmlrpc-c-dev \
         zlib-dev \
+        autoconf \
 
     \
     && apk add --no-cache \
