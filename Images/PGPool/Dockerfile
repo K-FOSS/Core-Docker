@@ -51,18 +51,20 @@ RUN set -eux \
     \
     && mkdir -p /tmp/out/var/run/pgpool \
     && mkdir -p /tmp/out/var/run/postgresql \
-    && mkdir -p /tmp/out${PGPOOL_INSTALL_DIR} \
-    && chown -R postgres:postgres /tmp/out/var/run/pgpool /tmp/out/var/run/postgresql /tmp/out${PGPOOL_INSTALL_DIR}
+    && mkdir -p /tmp/out/opt/pgpool-II \
+    && chown -R postgres:postgres /tmp/out/var/run/pgpool /tmp/out/var/run/postgresql /tmp/out/opt/pgpool-II
 
 RUN set -eux \
     \
     && apk del --purge  --rdepends fetch-dependencies build-dependencies
 
-COPY entrypoint.sh /tmp/out${PGPOOL_INSTALL_DIR}/bin/
-COPY start.sh /tmp/out${PGPOOL_INSTALL_DIR}/bin/
+COPY entrypoint.sh /tmp/out/opt/pgpool-II/bin/
+COPY start.sh /tmp/out/opt/pgpool-II/bin/
 
 
 FROM alpine:latest
+
+COPY --from=builder /tmp/out /
 
 WORKDIR /
 
@@ -84,7 +86,7 @@ RUN apk add --no-cache \
     && mkdir -p /var/run \
     && mkdir -p /opt/pgpool-II
 
-COPY --from=builder /tmp/out /
+
 
 USER postgres
 
