@@ -134,4 +134,4 @@ COPY --from=builder /tmp/out/usr /usr
 
 RUN mkdir -p /var/run
 
-COPY --from=builder /tmp/out/var /var
+COPY --from=builder /tmp/out/var/lib/freeswitch /var/lib/freeswitch
