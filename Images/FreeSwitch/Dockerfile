@@ -1,4 +1,4 @@
-FROM alpine:latest as builder
+FROM alpine:latest AS builder
 
 
 # Install packages
@@ -119,4 +119,15 @@ RUN ls -lah \
   && make libs/libvpx/libvpx.a \
   && make src/include/switch_version.h src/include/switch_swigable_cpp.h \
   && make libfreeswitch.la \
-  && make all
+  && make all \
+  && cd libs/esl \
+  && make perlmod \
+  && cd /src/freeswitch \
+  && make -j1 DESTDIR="/tmp/out" install samples-conf samples-htdocs \
+  && cd libs/esl \
+  && make -j1 DESTDIR="/tmp/out" perlmod-install
+
+
+FROM alpine:latest
+
+COPY --from=builder /tmp/out /
