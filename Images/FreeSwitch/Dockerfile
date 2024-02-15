@@ -95,6 +95,7 @@ RUN ls -lah \
   && patch -p1 < getlib.patch \
   && patch -p1 < libvpx-fix-arm-float-abi.patch \
   && patch -p1 < disable-Werror.patch \
+  && autoreconf -vif \
   && ./configure \
 		--build=$CBUILD \
 		--host=$CHOST \
