@@ -103,7 +103,6 @@ RUN ls -lah \
 		--mandir=/usr/share/man \
 		--infodir=/usr/share/info \
 		--with-devrandom=/dev/urandom \
-		--with-python3 \
         --with-ldap \
 		--disable-debug \
 		--enable-core-pgsql-support \
