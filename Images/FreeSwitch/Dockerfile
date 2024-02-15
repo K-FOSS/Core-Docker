@@ -1,4 +1,4 @@
-FROM alpine:3.17 as builder
+FROM alpine:latest as builder
 
 
 # Install packages
