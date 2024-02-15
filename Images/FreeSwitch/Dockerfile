@@ -127,3 +127,8 @@ RUN ls -lah \
   && cd libs/esl \
   && make -j1 DESTDIR="/tmp/out" perlmod-install
 
+FROM alpine:latest
+
+COPY --from=builder /tmp/out/etc /etc
+COPY --from=builder /tmp/out/usr /usr
+COPY --from=builder /tmp/out/var /var
