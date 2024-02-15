@@ -67,6 +67,8 @@ RUN set -eux \
         xmlrpc-c-dev \
         zlib-dev \
         autoconf \
+        freeradius \
+        freeradius-lib \
 
     \
     && apk add --no-cache \
