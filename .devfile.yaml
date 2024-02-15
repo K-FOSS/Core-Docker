@@ -6,6 +6,10 @@ components:
   - name: devtools
     container:
       image: quay.io/devfile/universal-developer-image:latest
+      cpuLimit: 4000m 
+      cpuRequest: 200m
+      memoryLimit: 8G
+      memoryRequest: 128M 
       env:
         - name: KUBEDOCK_ENABLED
           value: 'true'
