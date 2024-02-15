@@ -29,6 +29,18 @@ jobs:
           password: ${{ secrets.DH_TOKEN }}
 
       - name: Build and push
+        id: freeswitch_build
+        if: ${{ github.ref == 'refs/heads/main' }}
+        uses: docker/build-push-action@v5.1.0
+        with:
+          context: ./Images/FreeSwitch
+          cache-from: type=registry,ref=kristianfjones/freeswitch:latest
+          cache-to: type=inline
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: kristianfjones/freeswitch:latest
+
+      - name: Build and push
         id: pgpool_build
         if: ${{ github.ref == 'refs/heads/main' }}
         uses: docker/build-push-action@v5.1.0
