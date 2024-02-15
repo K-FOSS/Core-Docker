@@ -84,8 +84,10 @@ RUN export VERSION=$(wget -O - -q https://files.freeswitch.org/freeswitch-releas
 WORKDIR /src/freeswitch
 
 COPY ./modules.conf /src/freeswitch/modules.conf
+COPY ./python-3.10.patch /src/freeswitch/python-3.10.patch
 
 RUN ls -lah \
+  && patch -p1 < python-3.10.patch \
   && ./configure \
 		--build=$CBUILD \
 		--host=$CHOST \
