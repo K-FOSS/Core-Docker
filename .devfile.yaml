@@ -5,11 +5,28 @@ metadata:
 components:
   - name: devtools
     container:
-      image: quay.io/devfile/universal-developer-image:latest
-      cpuLimit: 4000m 
-      cpuRequest: 200m
-      memoryLimit: 8G
-      memoryRequest: 128M 
       env:
         - name: KUBEDOCK_ENABLED
           value: 'true'
+
+        - name: DOCKER_HOST
+          value: 'tcp://127.0.0.1:2475'
+
+        - name: TESTCONTAINERS_RYUK_DISABLED
+          value: 'true'
+
+        - name: TESTCONTAINERS_CHECKS_DISABLE
+          value: 'true'
+
+      image: quay.io/devfile/universal-developer-image:latest
+
+      memoryRequest: 2Gi
+      memoryLimit: 8Gi
+      cpuRequest: 300m
+
+      cpuLimit: 4000m
+      endpoints:
+        - exposure: none
+          name: kubedock
+          protocol: tcp
+          targetPort: 2475 
