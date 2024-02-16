@@ -101,15 +101,11 @@ RUN ls -lah \
   && patch -p1 < disable-Werror.patch \
   && autoreconf -vif \
   && ./configure \
-		--build=$CBUILD \
-		--host=$CHOST \
 		--prefix=/usr \
 		--enable-fhs \
 		--localstatedir=/var \
 		--sysconfdir=/etc \
 		--with-scriptdir=/etc/freeswitch/scripts \
-		--mandir=/usr/share/man \
-		--infodir=/usr/share/info \
 		--with-devrandom=/dev/urandom \
         --with-ldap \
 		--disable-debug \
