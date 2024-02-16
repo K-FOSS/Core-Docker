@@ -48,6 +48,5 @@ RUN set -eux \
         --with-ldap \
         --with-pic \
         --with-gnu-ld \
-        --help \
     && make \
     && make DESTDIR=/tmp/out install
