@@ -1,8 +1,4 @@
 FROM debian:latest AS builder
-
-ENV PGPOOL_INSTALL_DIR /opt/pgpool-II
-ENV PGPOOL_CONF_VOLUME /config
-
 WORKDIR /tmp/openldap
 
 RUN apt-get update && apt-get -uy upgrade
@@ -35,5 +31,14 @@ RUN export VERSION=$(wget -O - -q https://www.openldap.org/software/download/Ope
 
 WORKDIR /src/openldap
 
+ENV CFLAGS='-O2 -static -static-libgcc'
+ENV CXXFLAGS='-O2 -static -static-libgcc'
+ENV LDFLAGS='-s'
+
 RUN ls -lah \
-  && ./configure --help
+  && ./configure \
+    --with-pic \
+    --with-tls=openssl \
+    --with-gnu-ld \
+  && make -j "$(nproc)" \
+  && make DESTDIR=/tmp/out install
