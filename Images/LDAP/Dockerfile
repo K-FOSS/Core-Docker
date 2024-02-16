@@ -43,3 +43,7 @@ RUN ls -lah \
     --with-gnu-ld \
   && make -j "$(nproc)" \
   && make DESTDIR=/tmp/out install
+
+FROM scratch
+
+COPY --from=builder /tmp/out /

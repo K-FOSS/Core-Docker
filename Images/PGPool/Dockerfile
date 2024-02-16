@@ -1,5 +1,7 @@
 FROM debian:latest AS builder
 
+COPY --from=kristianfjones/library-openldap / /
+
 ENV PGPOOL_INSTALL_DIR /opt/pgpool-II
 ENV PGPOOL_CONF_VOLUME /config
 
@@ -23,7 +25,6 @@ RUN apt install -y \
     patch \
     openssl \
     libssl-dev \
-    libldap-dev \
     postgresql \
     sed \
     sudo
