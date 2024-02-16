@@ -147,6 +147,72 @@ COPY --from=prepareUser /tmp/out /
 COPY --from=builder /tmp/out /
 
 RUN apk add --no-cache \
+        bison \
+        flex \
+        file \
+        gcc \
+        g++ \
+        libbsd-doc \
+        linux-headers \
+        make \
+        patch \
+        openssl-dev \
+        openldap-dev \
+        apr-dev \
+        autoconf \ 
+        automake \
+        bash \
+        bsd-compat-headers \
+        coreutils \ 
+        curl-dev \
+        diffutils \
+        flite-dev \
+        gdbm-dev \
+        lame-dev \
+        ldns-dev \
+        libedit-dev \
+        libjpeg-turbo-dev \
+        libks-dev \
+        libpq-dev \
+        libshout-dev \
+        libsndfile-dev \
+        libsrtp-dev \
+        libtool \
+        linux-headers \
+        lua5.3-dev \
+        mpg123-dev \
+        mariadb-dev \
+        ncurses-dev \
+        nasm \
+        net-snmp-dev \
+        openssl-dev>3 \
+        opus-dev \
+        pcre-dev \
+        perl-dev \
+        portaudio-dev \
+        python3-dev \
+        sngtc_client-dev \
+        sofia-sip-dev \
+        spandsp3-dev \
+        speex-dev \
+        speexdsp-dev \
+        sqlite-dev \
+        tiff-dev \
+        unixodbc-dev \
+        util-linux-dev \
+        xmlrpc-c-dev \
+        zlib-dev \
+        autoconf \
+        freeradius \
+        freeradius-lib \
+        h2o-dev \
+        freeradius-client \
+        bash \
+        postgresql \
+        postgresql-dev \
+        openssl \
+        sed \
+        sudo \
         busybox-binsh \
         lame-libs \
         libcrypto3 \
