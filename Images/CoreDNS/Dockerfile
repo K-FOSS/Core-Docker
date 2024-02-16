@@ -30,6 +30,6 @@ ARG TARGETARCH
 
 COPY --from=builder /src/github.com/coredns/build/linux/${TARGETARCH}/coredns /coredns
 
-COPY --from=certs  /etc/ssl/certs /etc/ssl/certs
+COPY --from=certs /etc/ssl/certs /etc/ssl/certs
 
 ENTRYPOINT [ "/coredns" ]
