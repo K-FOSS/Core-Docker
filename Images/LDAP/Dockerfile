@@ -38,8 +38,13 @@ ENV LDFLAGS='-s'
 
 RUN ls -lah \
   && ./configure \
+		--libexecdir=/usr/lib \
+		--sysconfdir=/etc \
+		--mandir=/usr/share/man \
+		--localstatedir=/var/lib/openldap \
     --with-pic \
     --with-tls=openssl \
+    --enable-dynamic \
     --with-gnu-ld \
   && make -j "$(nproc)" \
   && make DESTDIR=/tmp/out install

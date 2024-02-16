@@ -29,9 +29,6 @@ RUN apt install -y \
 
 COPY --from=kristianfjones/library-openldap / /
 
-COPY fix_compile_error.patch /tmp/pgpool/
-
-
 # Install Pgpool-II
 RUN set -eux \
     \
