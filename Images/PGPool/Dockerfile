@@ -1,7 +1,5 @@
 FROM debian:latest AS builder
 
-COPY --from=kristianfjones/library-openldap / /
-
 ENV PGPOOL_INSTALL_DIR /opt/pgpool-II
 ENV PGPOOL_CONF_VOLUME /config
 
@@ -29,6 +27,8 @@ RUN apt install -y \
     sed \
     sudo
 
+COPY --from=kristianfjones/library-openldap / /
+
 COPY fix_compile_error.patch /tmp/pgpool/
 
 ENV CFLAGS='-O2 -static -static-libgcc'
@@ -47,5 +47,6 @@ RUN set -eux \
         --with-ldap \
         --with-pic \
         --with-gnu-ld \
-    && make -j "$(nproc)" \
+        --help \
+    && make \
     && make DESTDIR=/tmp/out install
