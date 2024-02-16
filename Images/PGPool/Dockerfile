@@ -31,9 +31,6 @@ COPY --from=kristianfjones/library-openldap / /
 
 COPY fix_compile_error.patch /tmp/pgpool/
 
-ENV CFLAGS='-O2 -static -static-libgcc'
-ENV CXXFLAGS='-O2 -static -static-libgcc'
-
 
 # Install Pgpool-II
 RUN set -eux \
