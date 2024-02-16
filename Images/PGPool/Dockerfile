@@ -44,5 +44,7 @@ RUN set -eux \
         --prefix=${PGPOOL_INSTALL_DIR} \
         --with-openssl \
         --with-ldap \
+        --with-pic \
+        --with-gnu-ld \
     && make -j "$(nproc)" \
     && make DESTDIR=/tmp/out install
