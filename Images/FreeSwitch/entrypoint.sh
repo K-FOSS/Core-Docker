@@ -11,7 +11,7 @@ fi
 
 trap '/usr/bin/freeswitch -stop' TERM
 
-/usr/bin/freeswitch -nonat -c &
+/usr/bin/freeswitch -nonat -nocal -nort -nosql -nf -c &
 pid="$!"
 
 wait $pid
