@@ -96,9 +96,6 @@ COPY ./disable-Werror.patch /src/freeswitch/disable-Werror.patch
 
 RUN ls -lah \
   && patch -p1 < python-3.10.patch \
-  && patch -p1 < getlib.patch \
-  && patch -p1 < libvpx-fix-arm-float-abi.patch \
-  && patch -p1 < disable-Werror.patch \
   && autoreconf -vif \
   && ./configure \
 		--prefix=/usr \
@@ -176,10 +173,6 @@ RUN apk add --no-cache \
         freeradius-lib \
         h2o \
         freeradius-client \
-        freeswitch-sounds-music-8000 \
-        freeswitch-sounds-music-32000 \
-        freeswitch-sounds-en-us-callie-8000 \
-        freeswitch-sounds-en-us-callie-32000 \
     && mkdir -p /var/run/freeswitch \
     && chown -R 1000:1000 /var/run/freeswitch \
     && chown -R 1000:1000 /var/lib/freeswitch \
