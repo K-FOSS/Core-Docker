@@ -101,12 +101,14 @@ RUN ls -lah \
   && ./configure \
 		--prefix=/usr \
 		--enable-fhs \
+        --with-pic \
+        --with-gnu-ld \
+        --enable-static \
 		--localstatedir=/var \
 		--sysconfdir=/etc \
 		--with-scriptdir=/etc/freeswitch/scripts \
 		--with-devrandom=/dev/urandom \
         --with-ldap \
-        --help \
 		--disable-debug \
 		--enable-core-pgsql-support \
 		--enable-system-lua \
