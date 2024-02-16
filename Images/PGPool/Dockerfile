@@ -22,6 +22,7 @@ RUN apt install -y \
     make \
     patch \
     openssl \
+    libssl-dev \
     libldap-dev \
     postgresql \
     sed \
