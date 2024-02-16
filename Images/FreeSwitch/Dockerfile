@@ -128,6 +128,8 @@ RUN ls -lah \
   && make -j1 DESTDIR="/tmp/out" perlmod-install \
   && rm -rf /tmp/out/var/run
 
+COPY ./freeswitch.limits.conf /tmp/out/etc/security/limits.d/
+
 FROM alpine:latest as prepareUser
 
 ARG USER=freeswitch
