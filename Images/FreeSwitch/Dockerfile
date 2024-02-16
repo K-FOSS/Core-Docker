@@ -144,7 +144,7 @@ RUN apk add --no-cache \
         libsndfile \
         libssl3 \
         libstdc++ \
-        libuuid |
+        libuuid \
         lua5.3-libs \
         mpg123-libs \
         musl \
