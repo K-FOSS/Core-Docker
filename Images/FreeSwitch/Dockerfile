@@ -207,42 +207,14 @@ RUN apk add --no-cache \
         freeradius-lib \
         h2o-dev \
         freeradius-client \
+        tar \
+        ack \
         bash \
         postgresql \
         postgresql-dev \
         openssl \
         sed \
         sudo \
-        busybox-binsh \
-        lame-libs \
-        libcrypto3 \
-        libcurl \
-        libldap \
-        libedit \
-        libgcc \
-        libks \
-        libncursesw \
-        libpq \
-        libshout \
-        libsndfile \
-        libssl3 \
-        libstdc++ \
-        libuuid \
-        lua5.3-libs \
-        mpg123-libs \
-        musl \
-        opus \
-        pcre \
-        portaudio \
-        sofia-sip \
-        spandsp3 \
-        speex \
-        speexdsp \
-        sqlite-libs \
-        unixodbc \
-        freeradius-lib \
-        h2o \
-        freeradius-client \
     && mkdir -p /var/run/freeswitch \
     && chown -R 1000:1000 /var/run/freeswitch \
     && chown -R 1000:1000 /var/lib/freeswitch \
