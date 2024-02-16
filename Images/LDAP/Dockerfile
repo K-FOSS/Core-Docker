@@ -3,7 +3,7 @@ FROM debian:latest AS builder
 ENV PGPOOL_INSTALL_DIR /opt/pgpool-II
 ENV PGPOOL_CONF_VOLUME /config
 
-WORKDIR /tmp/pgpool
+WORKDIR /tmp/openldap
 
 RUN apt-get update && apt-get -uy upgrade
 
@@ -23,8 +23,9 @@ RUN apt install -y \
     make \
     patch \
     openssl \
+    libargon2-dev \
     libssl-dev \
-    libldap-dev \
+    libevent-dev \
     sed \
     sudo
 
