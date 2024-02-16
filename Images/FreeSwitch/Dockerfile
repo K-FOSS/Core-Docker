@@ -125,13 +125,45 @@ RUN ls -lah \
   && cd /src/freeswitch \
   && make -j1 DESTDIR="/tmp/out" install samples-conf samples-htdocs \
   && cd libs/esl \
-  && make -j1 DESTDIR="/tmp/out" perlmod-install
+  && make -j1 DESTDIR="/tmp/out" perlmod-install \
+  && rm -rf /tmp/out/var/run
 
 FROM alpine:latest
+
+RUN apk add --no-cache \
+        busybox-binsh \
+        lame-libs \
+        libcrypto3 \
+        libcurl \
+        libedit \
+        libgcc \
+        libks \
+        libncursesw \
+        libpq \
+        libshout \
+        libsndfile \
+        libssl3 \
+        libstdc++ \
+        libuuid |
+        lua5.3-libs \
+        mpg123-libs \
+        musl \
+        opus \
+        pcre \
+        portaudio \
+        sofia-sip \
+        spandsp3 \
+        speex \
+        speexdsp \
+        sqlite-libs \
+        unixodbc \
+        freeradius-lib \
+        h2o \
+        freeradius-client
 
 COPY --from=builder /tmp/out/etc /etc
 COPY --from=builder /tmp/out/usr /usr
 
 RUN mkdir -p /var/run
 
-COPY --from=builder /tmp/out/var/lib/freeswitch /var/lib/freeswitch
+COPY --from=builder /tmp/out /
