@@ -20,6 +20,7 @@ RUN apt install -y \
     patch \
     openssl \
     libargon2-dev \
+    groff-base \
     libssl-dev \
     libevent-dev \
     sed \
