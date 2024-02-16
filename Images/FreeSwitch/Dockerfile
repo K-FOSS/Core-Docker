@@ -163,6 +163,6 @@ RUN apk add --no-cache \
         freeswitch-sounds-music-8000 \
         freeswitch-sounds-music-32000 \
         freeswitch-sounds-en-us-callie-8000 \
-        freeswitch-sounds-en-us-callie-32000 \
+        freeswitch-sounds-en-us-callie-32000
 
 COPY --from=builder /tmp/out /
