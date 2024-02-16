@@ -9,6 +9,7 @@ RUN apt-get update && apt-get -uy upgrade
 
 # Install packages
 RUN apt install -y \
+    ack \
     wget \
     ca-certificates \
     build-essential \
