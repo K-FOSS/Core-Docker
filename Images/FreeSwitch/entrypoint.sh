@@ -11,12 +11,7 @@ fi
 
 trap '/usr/bin/freeswitch -stop' TERM
 
-if [ -d /docker-entrypoint.d ]; then
-    for f in /docker-entrypoint.d/*.sh; do
-        [ -f "$f" ] && . "$f"
-    done
-fi
-su-exec freeswitch:freeswitch /usr/bin/freeswitch -nonat -c &
+/usr/bin/freeswitch -nonat -c &
 pid="$!"
 
 wait $pid
