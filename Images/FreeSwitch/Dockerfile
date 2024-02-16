@@ -96,6 +96,7 @@ COPY ./disable-Werror.patch /src/freeswitch/disable-Werror.patch
 
 RUN ls -lah \
   && patch -p1 < python-3.10.patch \
+  && patch -p1 < disable-Werror.patch \
   && autoreconf -vif \
   && ./configure \
 		--prefix=/usr \
