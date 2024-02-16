@@ -191,3 +191,9 @@ RUN apk add --no-cache \
     && chown -R 1000:1000 /etc/freeswitch
 
 USER freeswitch
+
+COPY ./entrypoint.sh /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
+
+CMD ["freeswitch"]
