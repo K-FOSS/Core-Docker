@@ -159,11 +159,10 @@ RUN apk add --no-cache \
         unixodbc \
         freeradius-lib \
         h2o \
-        freeradius-client
-
-COPY --from=builder /tmp/out/etc /etc
-COPY --from=builder /tmp/out/usr /usr
-
-RUN mkdir -p /var/run
+        freeradius-client \
+        freeswitch-sounds-music-8000 \
+        freeswitch-sounds-music-32000 \
+        freeswitch-sounds-en-us-callie-8000 \
+        freeswitch-sounds-en-us-callie-32000 \
 
 COPY --from=builder /tmp/out /
