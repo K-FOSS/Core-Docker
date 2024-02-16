@@ -128,8 +128,23 @@ RUN ls -lah \
   && make -j1 DESTDIR="/tmp/out" perlmod-install \
   && rm -rf /tmp/out/var/run
 
+FROM alpine:latest as prepareUser
+
+ARG USER=freeswitch
+ARG UID=1000
+ARG USER_DATA=/etc/freeswitch
+
+ENV USER ${USER}
+ENV UID ${UID}
+ENV USER_DATA ${USER_DATA}
+
+RUN mkdir -p /tmp/out/etc \
+  && echo "${USER}:x:${UID}:${UID}::${USER_DATA}:/bin/sh" > /tmp/out/etc/passwd \
+  && echo "${USER}:x:${UID}:" > /tmp/out/etc/group
+
 FROM alpine:latest
 
+COPY --from=prepareUser /tmp/out /
 COPY --from=builder /tmp/out /
 
 RUN apk add --no-cache \
@@ -167,3 +182,5 @@ RUN apk add --no-cache \
         freeswitch-sounds-music-32000 \
         freeswitch-sounds-en-us-callie-8000 \
         freeswitch-sounds-en-us-callie-32000
+
+USER freeswitch
