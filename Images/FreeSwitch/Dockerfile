@@ -106,6 +106,7 @@ RUN ls -lah \
 		--with-scriptdir=/etc/freeswitch/scripts \
 		--with-devrandom=/dev/urandom \
         --with-ldap \
+        --help \
 		--disable-debug \
 		--enable-core-pgsql-support \
 		--enable-system-lua \
