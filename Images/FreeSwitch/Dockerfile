@@ -185,9 +185,9 @@ RUN apk add --no-cache \
         freeswitch-sounds-en-us-callie-8000 \
         freeswitch-sounds-en-us-callie-32000 \
     && mkdir -p /var/run/freeswitch \
-    && chown 1000:1000 /var/run/freeswitch \
-    && chown 1000:1000 /var/lib/freeswitch \
-    && chown 1000:1000 /var/log/freeswitch \
-    && chown 1000:1000 /etc/freeswitch
+    && chown -R 1000:1000 /var/run/freeswitch \
+    && chown -R 1000:1000 /var/lib/freeswitch \
+    && chown -R 1000:1000 /var/log/freeswitch \
+    && chown -R 1000:1000 /etc/freeswitch
 
 USER freeswitch
