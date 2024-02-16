@@ -36,7 +36,7 @@ jobs:
           context: ./Images/LDAP
           cache-from: type=registry,ref=kristianfjones/library-openldap:latest
           cache-to: type=inline
-          platforms: linux/amd64
+          platforms: linux/amd64,linux/arm64
           push: true
           tags: kristianfjones/library-openldap:latest
 
@@ -60,7 +60,7 @@ jobs:
           context: ./Images/PGPool
           cache-from: type=registry,ref=kristianfjones/pgpool:latest
           cache-to: type=inline
-          platforms: linux/amd64
+          platforms: linux/amd64,linux/arm64
           push: true
           tags: kristianfjones/pgpool:latest
 
