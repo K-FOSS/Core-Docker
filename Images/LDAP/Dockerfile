@@ -35,5 +35,4 @@ RUN export VERSION=$(wget -O - -q https://www.openldap.org/software/download/Ope
 WORKDIR /src/openldap
 
 RUN ls -lah \
-  && AUTOMAKE=/bin/true autoreconf -fi \
   && ./configure --help
