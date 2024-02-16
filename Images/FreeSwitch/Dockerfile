@@ -137,6 +137,7 @@ RUN apk add --no-cache \
         lame-libs \
         libcrypto3 \
         libcurl \
+        libldap \
         libedit \
         libgcc \
         libks \
