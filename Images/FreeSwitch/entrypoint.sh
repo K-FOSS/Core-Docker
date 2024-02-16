@@ -12,9 +12,3 @@ fi
 trap '/usr/bin/freeswitch -stop' TERM
 
 /usr/bin/freeswitch -nonat -c &
-pid="$!"
-
-wait $pid
-exit 0
-
-
