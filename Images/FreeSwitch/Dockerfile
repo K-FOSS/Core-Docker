@@ -113,6 +113,10 @@ RUN ls -lah \
 		--enable-core-pgsql-support \
 		--enable-system-lua \
 		--enable-system-xmlrpc-c \
+  && cd libs/libedit \
+  && sh configure.gnu \
+  && make \
+  && cd ../.. \
   && make libs/libvpx/libvpx.a \
   && make src/include/switch_version.h src/include/switch_swigable_cpp.h \
   && make libfreeswitch.la \
@@ -147,6 +151,9 @@ COPY --from=prepareUser /tmp/out /
 COPY --from=builder /tmp/out /
 
 RUN apk add --no-cache \
+        ca-certificates \
+        tar \
+        ack \
         bison \
         flex \
         file \
@@ -207,8 +214,6 @@ RUN apk add --no-cache \
         freeradius-lib \
         h2o-dev \
         freeradius-client \
-        tar \
-        ack \
         bash \
         postgresql \
         postgresql-dev \
