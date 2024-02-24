@@ -28,17 +28,7 @@ jobs:
           username: ${{ secrets.DH_USER }}
           password: ${{ secrets.DH_TOKEN }}
 
-      - name: Build and push
-        id: openldap_build
-        if: ${{ github.ref == 'refs/heads/main' }}
-        uses: docker/build-push-action@v5.1.0
-        with:
-          context: ./Images/LDAP
-          cache-from: type=registry,ref=kristianfjones/library-openldap:latest
-          cache-to: type=inline
-          platforms: linux/amd64
-          push: true
-          tags: kristianfjones/library-openldap:latest
+
 
       - name: Build and push
         id: freeswitch_build
@@ -51,6 +41,18 @@ jobs:
           platforms: linux/amd64
           push: true
           tags: kristianfjones/freeswitch:latest
+
+      - name: Build and push
+        id: openldap_build
+        if: ${{ github.ref == 'refs/heads/main' }}
+        uses: docker/build-push-action@v5.1.0
+        with:
+          context: ./Images/LDAP
+          cache-from: type=registry,ref=kristianfjones/library-openldap:latest
+          cache-to: type=inline
+          platforms: linux/amd64
+          push: true
+          tags: kristianfjones/library-openldap:latest
 
       - name: Build and push
         id: pgpool_build
