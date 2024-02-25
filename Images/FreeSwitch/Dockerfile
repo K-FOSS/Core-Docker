@@ -1,38 +1,85 @@
-FROM debian:latest AS builder
-WORKDIR /tmp/openldap
+FROM alpine:latest AS builder
 
-RUN apt-get update && apt-get -uy upgrade
 
 # Install packages
-RUN apt install -y \
-    ack \
-    wget \
-    ca-certificates \
-    build-essential \
-    tar \
-    bison \
-    flex \
-    file \
-    gcc \
-    g++ \
-    libbsd-dev \
-    make \
-    patch \
-    openssl \
-    libargon2-dev \
-    groff-base \
-    libssl-dev \
-    libevent-dev \
-    sed \
-    sudo \
-    libldap2-dev \
-    libasound2-dev \
-    libavcodec-dev \
-    erlang-dev \
-    libavutil-dev \
-    libavformat-dev \
-    libswscale-dev
 
+RUN set -eux \
+    \
+    && apk add --no-cache --virtual fetch-dependencies \
+        ca-certificates \
+        tar \
+        ack \
+    \
+    && apk add --no-cache --virtual build-dependencies \
+        bison \
+        flex \
+        file \
+        gcc \
+        g++ \
+        libbsd-doc \
+        linux-headers \
+        make \
+        patch \
+        openssl-dev \
+        openldap-dev \
+        apr-dev \
+        autoconf \ 
+        automake \
+        bash \
+        bsd-compat-headers \
+        coreutils \ 
+        curl-dev \
+        diffutils \
+        flite-dev \
+        gdbm-dev \
+        lame-dev \
+        ldns-dev \
+        libedit-dev \
+        libjpeg-turbo-dev \
+        libks-dev \
+        libpq-dev \
+        libshout-dev \
+        libsndfile-dev \
+        libsrtp-dev \
+        libtool \
+        linux-headers \
+        lua5.3-dev \
+        mpg123-dev \
+        mariadb-dev \
+        ncurses-dev \
+        nasm \
+        net-snmp-dev \
+        openssl-dev>3 \
+        opus-dev \
+        pcre-dev \
+        perl-dev \
+        portaudio-dev \
+        python3-dev \
+        sngtc_client-dev \
+        sofia-sip-dev \
+        spandsp3-dev \
+        speex-dev \
+        speexdsp-dev \
+        sqlite-dev \
+        tiff-dev \
+        unixodbc-dev \
+        util-linux-dev \
+        xmlrpc-c-dev \
+        zlib-dev \
+        autoconf \
+        freeradius \
+        freeradius-lib \
+        h2o-dev \
+        freeradius-client \
+
+    \
+    && apk add --no-cache \
+        bash \
+        postgresql \
+        postgresql-dev \
+        openssl \
+        sed \
+        sudo
 
 RUN export VERSION=$(wget -O - -q https://files.freeswitch.org/freeswitch-releases/ | ack -o 'freeswitch-\d{1,2}\.\d{1,2}\.\d{1,2}' | tail -1) \
     && echo "Getting https://files.freeswitch.org/freeswitch-releases/${VERSION}.-release.tar.xz" \
@@ -41,21 +88,144 @@ RUN export VERSION=$(wget -O - -q https://files.freeswitch.org/freeswitch-releas
 
 WORKDIR /src/freeswitch
 
-ENV CFLAGS='-O2 -static -static-libgcc'
-ENV CXXFLAGS='-O2 -static -static-libgcc'
-ENV LDFLAGS='-s'
+COPY ./modules.conf /src/freeswitch/modules.conf
+COPY ./python-3.10.patch /src/freeswitch/python-3.10.patch
+COPY ./getlib.patch /src/freeswitch/getlib.patch
+COPY ./libvpx-fix-arm-float-abi.patch /src/freeswitch/libvpx-fix-arm-float-abi.patch
+COPY ./disable-Werror.patch /src/freeswitch/disable-Werror.patch
 
 RUN ls -lah \
+  && patch -p1 < python-3.10.patch \
+  && patch -p1 < disable-Werror.patch \
+  && autoreconf -vif \
   && ./configure \
-		--libexecdir=/usr/lib \
+		--prefix=/usr \
+		--enable-fhs \
+        --with-pic \
+        --with-gnu-ld \
+        --enable-static \
+		--localstatedir=/var \
 		--sysconfdir=/etc \
-		--mandir=/usr/share/man \
-		--localstatedir=/var/lib/openldap \
-    --with-pic \
-    --with-tls=openssl \
-    --enable-dynamic \
-    --with-gnu-ld \
-  && make -j "$(nproc)" \
-  && make DESTDIR=/tmp/out install
+		--with-scriptdir=/etc/freeswitch/scripts \
+		--with-devrandom=/dev/urandom \
+        --with-ldap \
+		--disable-debug \
+		--enable-core-pgsql-support \
+		--enable-system-lua \
+		--enable-system-xmlrpc-c \
+        --disable-core-libedit-support \
+  && make libs/libvpx/libvpx.a \
+  && make src/include/switch_version.h src/include/switch_swigable_cpp.h \
+  && make libfreeswitch.la \
+  && make all \
+  && cd libs/esl \
+  && make perlmod \
+  && cd /src/freeswitch \
+  && make -j1 DESTDIR="/tmp/out" install samples-conf samples-htdocs \
+  && cd libs/esl \
+  && make -j1 DESTDIR="/tmp/out" perlmod-install \
+  && rm -rf /tmp/out/var/run
+
+COPY ./freeswitch.limits.conf /tmp/out/etc/security/limits.d/
+
+FROM alpine:latest as prepareUser
+
+ARG USER=freeswitch
+ARG UID=1000
+ARG USER_DATA=/etc/freeswitch
+
+ENV USER ${USER}
+ENV UID ${UID}
+ENV USER_DATA ${USER_DATA}
+
+RUN mkdir -p /tmp/out/etc \
+  && echo "${USER}:x:${UID}:${UID}::${USER_DATA}:/bin/sh" > /tmp/out/etc/passwd \
+  && echo "${USER}:x:${UID}:" > /tmp/out/etc/group
+
+FROM alpine:latest
+
+COPY --from=prepareUser /tmp/out /
+COPY --from=builder /tmp/out /
+
+RUN apk add --no-cache \
+        bison \
+        flex \
+        file \
+        gcc \
+        g++ \
+        libbsd-doc \
+        linux-headers \
+        make \
+        patch \
+        openssl-dev \
+        openldap-dev \
+        apr-dev \
+        autoconf \ 
+        automake \
+        bash \
+        bsd-compat-headers \
+        coreutils \ 
+        curl-dev \
+        diffutils \
+        flite-dev \
+        gdbm-dev \
+        lame-dev \
+        ldns-dev \
+        libedit-dev \
+        libjpeg-turbo-dev \
+        libks-dev \
+        libpq-dev \
+        libshout-dev \
+        libsndfile-dev \
+        libsrtp-dev \
+        libtool \
+        linux-headers \
+        lua5.3-dev \
+        mpg123-dev \
+        mariadb-dev \
+        ncurses-dev \
+        nasm \
+        net-snmp-dev \
+        openssl-dev>3 \
+        opus-dev \
+        pcre-dev \
+        perl-dev \
+        portaudio-dev \
+        python3-dev \
+        sngtc_client-dev \
+        sofia-sip-dev \
+        spandsp3-dev \
+        speex-dev \
+        speexdsp-dev \
+        sqlite-dev \
+        tiff-dev \
+        unixodbc-dev \
+        util-linux-dev \
+        xmlrpc-c-dev \
+        zlib-dev \
+        autoconf \
+        freeradius \
+        freeradius-lib \
+        h2o-dev \
+        freeradius-client \
+        tar \
+        ack \
+        bash \
+        postgresql \
+        postgresql-dev \
+        openssl \
+        sed \
+        sudo \
+    && mkdir -p /var/run/freeswitch \
+    && chown -R 1000:1000 /var/run/freeswitch \
+    && chown -R 1000:1000 /var/lib/freeswitch \
+    && chown -R 1000:1000 /var/log/freeswitch \
+    && chown -R 1000:1000 /etc/freeswitch
+
+USER freeswitch
+
+COPY ./entrypoint.sh /entrypoint.sh
+
+ENTRYPOINT ["/entrypoint.sh"]
 
 CMD ["freeswitch"]
