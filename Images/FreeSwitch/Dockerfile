@@ -31,9 +31,8 @@ RUN apt install -y \
     erlang-dev \
     libavutil-dev \
     libavformat-dev \
-    libav-tools \
-    libavresample-dev \
     libswscale-dev
+
 
 RUN export VERSION=$(wget -O - -q https://files.freeswitch.org/freeswitch-releases/ | ack -o 'freeswitch-\d{1,2}\.\d{1,2}\.\d{1,2}' | tail -1) \
     && echo "Getting https://files.freeswitch.org/freeswitch-releases/${VERSION}.-release.tar.xz" \
