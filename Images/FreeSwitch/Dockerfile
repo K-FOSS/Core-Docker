@@ -47,7 +47,6 @@ ENV LDFLAGS='-s'
 
 RUN ls -lah \
   && ./configure \
-        --help \
 		--libexecdir=/usr/lib \
 		--sysconfdir=/etc \
 		--mandir=/usr/share/man \
