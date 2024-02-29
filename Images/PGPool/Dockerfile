@@ -60,3 +60,37 @@ RUN set -eux \
 
 COPY entrypoint.sh /tmp/out/opt/pgpool-II/bin/
 COPY start.sh /tmp/out/opt/pgpool-II/bin/
+
+
+FROM alpine:latest
+
+COPY --from=builder /tmp/out /
+
+WORKDIR /
+
+ENV PGPOOL_INSTALL_DIR /opt/pgpool-II
+ENV PGPOOL_CONF_VOLUME /config
+
+# Create postgres user used to start Pgpool-II
+RUN set -ex; \ 
+    addgroup -g 70 -S postgres; \
+    adduser -u 70 -S -D -G postgres -H -h /var/lib/pgsql -s /bin/sh postgres; \
+    mkdir -p /var/lib/pgsql; \
+    chown -R postgres:postgres /var/lib/pgsql
+
+RUN apk add --no-cache \
+        bash \
+        postgresql \
+        openssl \
+        openldap-dev \
+    && mkdir -p /var/run \
+    && mkdir -p /opt/pgpool-II
+
+
+
+USER postgres
+
+ENTRYPOINT ["/opt/pgpool-II/bin/entrypoint.sh"]
+CMD ["/opt/pgpool-II/bin/start.sh"]
+
+EXPOSE 9999
