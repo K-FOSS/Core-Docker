@@ -36,7 +36,6 @@ RUN set -eux \
     && tar -zxf /tmp/pgpool.tar.gz -C /tmp/pgpool --strip-components 1 \
     && cd /tmp/pgpool \
     && ./configure \
-        --disable-shared \
         --disable-rpath \
         --with-openssl \
         --with-ldap \
