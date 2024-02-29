@@ -61,6 +61,7 @@ RUN set -eux \
 
 COPY entrypoint.sh /tmp/out/opt/pgpool-II/bin/
 COPY start.sh /tmp/out/opt/pgpool-II/bin/
+COPY Healthcheck.sh /tmp/out/opt/pgpool-II/bin/
 
 
 FROM alpine:latest
@@ -85,7 +86,8 @@ RUN apk add --no-cache \
         openssl \
         openldap-dev \
     && mkdir -p /var/run \
-    && mkdir -p /opt/pgpool-II
+    && mkdir -p /opt/pgpool-II \
+    && chmod +x /opt/pgpool-II/bin/Healthcheck.sh
 
 
 
