@@ -53,7 +53,7 @@ RUN set -eux \
     && mkdir -p /tmp/out/var/run/postgresql \
     && mkdir -p /tmp/out/opt/pgpool-II \
     && chown -R postgres:postgres /tmp/out/opt/pgpool-II \
-    && && rm -rf /tmp/out/var/run
+    && rm -rf /tmp/out/var/run
 
 RUN set -eux \
     \
