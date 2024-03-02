@@ -85,7 +85,7 @@ RUN apk add --no-cache \
         postgresql \
         openssl \
         openldap-dev \
-    && mkdir -p /var/run \
+    && mkdir -p /var/run/pgpool \
     && mkdir -p /opt/pgpool-II \
     && chmod +x /opt/pgpool-II/bin/Healthcheck.sh
 
