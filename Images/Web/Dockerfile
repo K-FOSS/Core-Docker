@@ -1,4 +1,4 @@
-FROM caddy:2.7.6-builder-alpine AS builder
+FROM caddy:2.8.1-builder-alpine AS builder
 
 RUN xcaddy build \
     --with github.com/abiosoft/caddy-json-schema \
@@ -13,6 +13,6 @@ RUN xcaddy build \
     --with github.com/lindenlab/caddy-s3-proxy@v0.5.6 \
     --with github.com/n0trace/caddy-opentracing
 
-FROM caddy:2.7.6-builder-alpine
+FROM caddy:2.8.1-builder-alpine
 
 COPY --from=builder /usr/bin/caddy /usr/bin/caddy
