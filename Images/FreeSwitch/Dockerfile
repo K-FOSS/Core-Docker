@@ -69,7 +69,6 @@ RUN set -eux \
         autoconf \
         freeradius \
         freeradius-lib \
-        h2o-dev \
         freeradius-client \
 
     \
@@ -176,7 +175,6 @@ RUN apk add --no-cache \
         sqlite-libs \
         unixodbc \
         freeradius-lib \
-        h2o \
         freeradius-client \
         freeswitch-sounds-music-8000 \
         freeswitch-sounds-music-32000 \
