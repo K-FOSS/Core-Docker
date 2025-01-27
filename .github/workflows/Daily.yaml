@@ -29,6 +29,17 @@ jobs:
           password: ${{ secrets.DH_TOKEN }}
 
 
+      - name: Build and push
+        id: ipamnetbox_build
+        if: ${{ github.ref == 'refs/heads/main' }}
+        uses: docker/build-push-action@v5.1.0
+        with:
+          context: ./Images/NetBox
+          cache-from: type=registry,ref=kristianfoss/netbox:core
+          cache-to: type=inline
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: kristianfoss/netbox:core
 
       - name: Build and push
         id: freeswitch_build
@@ -125,18 +136,6 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: kristianfjones/coredns-docker:core0
-
-      - name: Build and push
-        id: ipamnetbox_build
-        if: ${{ github.ref == 'refs/heads/main' }}
-        uses: docker/build-push-action@v5.1.0
-        with:
-          context: ./Images/NetBox
-          cache-from: type=registry,ref=kristianfoss/netbox:core
-          cache-to: type=inline
-          platforms: linux/amd64,linux/arm64
-          push: true
-          tags: kristianfoss/netbox:core
 
       - name: Build and push
         id: keadhcp_build
