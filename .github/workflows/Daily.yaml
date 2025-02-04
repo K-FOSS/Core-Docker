@@ -28,6 +28,15 @@ jobs:
           username: ${{ secrets.DH_USER }}
           password: ${{ secrets.DH_TOKEN }}
 
+      - name: Build and push
+        id: postfix_build
+        if: ${{ github.ref == 'refs/heads/main' }}
+        uses: docker/build-push-action@v5.1.0
+        with:
+          context: ./Images/Postfix
+          platforms: linux/amd64,linux/arm64
+          push: true
+          tags: kristianfoss/postfix:core
 
       - name: Build and push
         id: ipamnetbox_build
