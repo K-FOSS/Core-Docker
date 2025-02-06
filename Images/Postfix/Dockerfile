@@ -1,4 +1,4 @@
-FROM alpine:3
+FROM alpine:latest
 
 RUN apk add --no-cache \
 	bash \
@@ -6,9 +6,9 @@ RUN apk add --no-cache \
 	libsasl \
 	mailx \
 	sed \
-  postfix \ 
+    postfix \ 
 	postfix-pgsql \
-        postfix-ldap \
+    postfix-ldap \
 	rsyslog \
 	rsyslog-pgsql \
 	runit
@@ -18,7 +18,5 @@ COPY runit_bootstrap /usr/sbin/runit_bootstrap
 COPY rsyslog.conf /etc/rsyslog.conf
 
 RUN ln -sf /dev/stdout /var/log/mail.log
-
-STOPSIGNAL SIGKILL
 
 ENTRYPOINT ["/usr/sbin/runit_bootstrap"]
