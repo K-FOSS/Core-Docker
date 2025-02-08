@@ -8,3 +8,5 @@ RUN apt-get update -qq \
 
 COPY ./plugin_requirements.txt /
 RUN /opt/netbox/venv/bin/pip install  --no-warn-script-location -r /plugin_requirements.txt
+
+RUN /opt/netbox/netbox/manage.py collectstatic --no-input
