@@ -7,6 +7,4 @@ RUN apt-get update -qq \
   &&  rm -rf /var/lib/apt/lists/*
 
 COPY ./plugin_requirements.txt /
-RUN /opt/netbox/venv/bin/pip install  --no-warn-script-location -r /plugin_requirements.txt
-
-RUN /opt/netbox/netbox/manage.py collectstatic --no-input
+RUN /usr/local/bin/uv pip install -r /plugin_requirements.txt
