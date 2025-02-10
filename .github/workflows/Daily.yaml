@@ -39,6 +39,18 @@ jobs:
           tags: kristianfoss/postfix:core
 
       - name: Build and push
+        id: keadhcp_build
+        if: ${{ github.ref == 'refs/heads/main' }}
+        uses: docker/build-push-action@v5.1.0
+        with:
+          context: ./Images/Kea
+          cache-from: type=registry,ref=kristianfjones/kea:vps1-core
+          cache-to: type=inline
+          platforms: linux/amd64
+          push: true
+          tags: kristianfjones/kea:vps1-core
+
+      - name: Build and push
         id: ipamnetbox_build
         if: ${{ github.ref == 'refs/heads/main' }}
         uses: docker/build-push-action@v5.1.0
@@ -50,17 +62,7 @@ jobs:
           push: true
           tags: kristianfoss/netbox:core
 
-      - name: Build and push
-        id: freeswitch_build
-        if: ${{ github.ref == 'refs/heads/main' }}
-        uses: docker/build-push-action@v5.1.0
-        with:
-          context: ./Images/FreeSwitch
-          cache-from: type=registry,ref=kristianfjones/freeswitch:latest
-          cache-to: type=inline
-          platforms: linux/amd64
-          push: true
-          tags: kristianfjones/freeswitch:latest
+
 
       - name: Build and push
         id: openldap_build
@@ -146,17 +148,7 @@ jobs:
           push: true
           tags: kristianfjones/coredns-docker:core0
 
-      - name: Build and push
-        id: keadhcp_build
-        if: ${{ github.ref == 'refs/heads/main' }}
-        uses: docker/build-push-action@v5.1.0
-        with:
-          context: ./Images/Kea
-          cache-from: type=registry,ref=kristianfjones/kea:vps1-core
-          cache-to: type=inline
-          platforms: linux/amd64
-          push: true
-          tags: kristianfjones/kea:vps1-core
+
 
       # - name: Build and push
       #   id: docker_build
@@ -216,3 +208,15 @@ jobs:
       #     context: ./Images/eNMS
       #     push: true
       #     tags: kristianfjones/enms:vps1
+
+      - name: Build and push
+        id: freeswitch_build
+        if: ${{ github.ref == 'refs/heads/main' }}
+        uses: docker/build-push-action@v5.1.0
+        with:
+          context: ./Images/FreeSwitch
+          cache-from: type=registry,ref=kristianfjones/freeswitch:latest
+          cache-to: type=inline
+          platforms: linux/amd64
+          push: true
+          tags: kristianfjones/freeswitch:latest
