@@ -221,7 +221,6 @@ if [ "$1" = 'dockerd' ]; then
 			--net="${DOCKERD_ROOTLESS_ROOTLESSKIT_NET:-vpnkit}" \
 			--mtu="${DOCKERD_ROOTLESS_ROOTLESSKIT_MTU:-1500}" \
 			--disable-host-loopback \
-			--port-driver=builtin \
 			--copy-up=/etc \
 			--copy-up=/run \
 			${DOCKERD_ROOTLESS_ROOTLESSKIT_FLAGS:-} \
