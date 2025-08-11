@@ -129,14 +129,14 @@ if [ "$#" -eq 0 ] || [ "${1#-}" != "$1" ]; then
 			--tlscert "$DOCKER_TLS_CERTDIR/server/cert.pem" \
 			--tlskey "$DOCKER_TLS_CERTDIR/server/key.pem" \
 			"$@"
-		DOCKERD_ROOTLESS_ROOTLESSKIT_FLAGS="${DOCKERD_ROOTLESS_ROOTLESSKIT_FLAGS:-} -p 0.0.0.0:2376:2376/tcp"
+		DOCKERD_ROOTLESS_ROOTLESSKIT_FLAGS="${DOCKERD_ROOTLESS_ROOTLESSKIT_FLAGS:-}"
 	else
 		# TLS disabled (-e DOCKER_TLS_CERTDIR='') or missing certs
 		set -- dockerd \
 			--host="$dockerSocket" \
 			--host=tcp://0.0.0.0:2375 \
 			"$@"
-		DOCKERD_ROOTLESS_ROOTLESSKIT_FLAGS="${DOCKERD_ROOTLESS_ROOTLESSKIT_FLAGS:-} -p 0.0.0.0:2375:2375/tcp"
+		DOCKERD_ROOTLESS_ROOTLESSKIT_FLAGS="${DOCKERD_ROOTLESS_ROOTLESSKIT_FLAGS:-}"
 	fi
 fi
 
@@ -220,7 +220,6 @@ if [ "$1" = 'dockerd' ]; then
 		exec rootlesskit \
 			--net="${DOCKERD_ROOTLESS_ROOTLESSKIT_NET:-vpnkit}" \
 			--mtu="${DOCKERD_ROOTLESS_ROOTLESSKIT_MTU:-1500}" \
-			--disable-host-loopback \
 			--copy-up=/etc \
 			--copy-up=/run \
 			${DOCKERD_ROOTLESS_ROOTLESSKIT_FLAGS:-} \
