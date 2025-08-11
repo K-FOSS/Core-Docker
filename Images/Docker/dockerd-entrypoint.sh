@@ -129,14 +129,15 @@ if [ "$#" -eq 0 ] || [ "${1#-}" != "$1" ]; then
 			--tlscert "$DOCKER_TLS_CERTDIR/server/cert.pem" \
 			--tlskey "$DOCKER_TLS_CERTDIR/server/key.pem" \
 			"$@"
-		DOCKERD_ROOTLESS_ROOTLESSKIT_FLAGS="${DOCKERD_ROOTLESS_ROOTLESSKIT_FLAGS:-}"
+		DOCKERD_ROOTLESS_ROOTLESSKIT_FLAGS="${DOCKERD_ROOTLESS_ROOTLESSKIT_FLAGS:-} -p 0.0.0.0:2376:2376/tcp"
 	else
 		# TLS disabled (-e DOCKER_TLS_CERTDIR='') or missing certs
 		set -- dockerd \
 			--host="$dockerSocket" \
+            --fixed-cidr="172.31.95.0/24" \
 			--host=tcp://0.0.0.0:2375 \
 			"$@"
-		DOCKERD_ROOTLESS_ROOTLESSKIT_FLAGS="${DOCKERD_ROOTLESS_ROOTLESSKIT_FLAGS:-}"
+		DOCKERD_ROOTLESS_ROOTLESSKIT_FLAGS="${DOCKERD_ROOTLESS_ROOTLESSKIT_FLAGS:-} -p 0.0.0.0:2375:2375/tcp"
 	fi
 fi
 
