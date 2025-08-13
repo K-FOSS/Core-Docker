@@ -29,7 +29,7 @@ jobs:
           password: ${{ secrets.DH_TOKEN }}
 
       - name: Build and push
-        id: docker_build
+        id: dockerllama_build
         if: ${{ github.ref == 'refs/heads/main' }}
         uses: docker/build-push-action@v5.1.0
         with:
