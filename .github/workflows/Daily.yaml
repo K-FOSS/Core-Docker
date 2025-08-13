@@ -34,7 +34,7 @@ jobs:
         uses: docker/build-push-action@v5.1.0
         with:
           context: ./Images/Llama
-          platforms: linux/amd64,linux/arm64
+          platforms: linux/amd64
           push: true
           tags: kristianfoss/llama:core
 
