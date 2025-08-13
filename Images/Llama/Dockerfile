@@ -24,7 +24,7 @@ RUN set -xe \
 # Build binaries
 WORKDIR /app/llama.cpp
 RUN set -xe \
- && cmake -B build -DGGML_RPC=ON -DCMAKE_BUILD_RPATH_USE_ORIGIN=ON -DLLAMA_NUMA=ON -DLLAMA_AVX=ON -DLLAMA_AVX2=OFF -DLLAMA_FMA=OFF -DLLAMA_F16C=OFF \
+ && cmake -B build -DGGML_RPC=ON -DCMAKE_BUILD_RPATH_USE_ORIGIN=ON -DLLAMA_NUMA=ON -DLLAMA_AVX=ON -DGGML_AVX2=OFF -DLLAMA_FMA=OFF -DLLAMA_F16C=OFF \
  && cmake --build build --config Release -j$(nproc)
 
 
