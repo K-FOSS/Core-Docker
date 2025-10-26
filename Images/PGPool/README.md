@@ -1,5 +1,4 @@
-# PGPool
-
+# PGPool 
 ```
 #15 2.183 `configure' configures pgpool-II 4.5.0 to adapt to many kinds of systems.
 #15 2.183 
