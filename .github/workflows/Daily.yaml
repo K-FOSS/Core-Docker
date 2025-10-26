@@ -29,6 +29,18 @@ jobs:
           password: ${{ secrets.DH_TOKEN }}
 
       - name: Build and push
+        id: pgpool_build
+        if: ${{ github.ref == 'refs/heads/main' }}
+        uses: docker/build-push-action@v5.1.0
+        with:
+          context: ./Images/PGPool
+          cache-from: type=registry,ref=kristianfjones/pgpool:latest
+          cache-to: type=inline
+          platforms: linux/amd64
+          push: true
+          tags: kristianfjones/pgpool:latest
+
+      - name: Build and push
         id: dockerllama_build
         if: ${{ github.ref == 'refs/heads/main' }}
         uses: docker/build-push-action@v5.1.0
