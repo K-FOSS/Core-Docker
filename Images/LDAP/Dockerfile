@@ -33,7 +33,7 @@ RUN export VERSION=$(wget -O - -q https://www.openldap.org/software/download/Ope
 WORKDIR /src/openldap
 
 ENV CFLAGS='-O2 -static -static-libgcc'
-ENV CXXFLAGS='-O2 -static -static-libgcc'
+ENV CXXFLAGS='-O2'
 ENV LDFLAGS='-s'
 
 RUN ls -lah \
