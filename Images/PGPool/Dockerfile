@@ -38,7 +38,7 @@ COPY fix_compile_error.patch /tmp/pgpool/
 # Install Pgpool-II
 RUN set -eux \
     \
-    && wget -O /tmp/pgpool.tar.gz "https://pgpool.net/mediawiki/images/pgpool-II-4.6.3.tar.gz" \
+    && wget -O /tmp/pgpool.tar.gz "https://pgpool.net/mediawiki/images/pgpool-II-4.7.0.tar.gz" \
     && tar -zxf /tmp/pgpool.tar.gz -C /tmp/pgpool --strip-components 1 \
     && cd /tmp/pgpool \
     && patch -p1 < fix_compile_error.patch \
