@@ -29,6 +29,18 @@ jobs:
           password: ${{ secrets.DH_TOKEN }}
 
       - name: Build and push
+        id: upnpc_build
+        if: ${{ github.ref == 'refs/heads/main' }}
+        uses: docker/build-push-action@v5.1.0
+        with:
+          context: ./Images/UPNP
+          cache-from: type=registry,ref=kristianfjones/upnp:jobs
+          cache-to: type=inline
+          platforms: linux/amd64
+          push: true
+          tags: kristianfjones/upnp:jobs
+
+      - name: Build and push
         id: mcphub_build
         if: ${{ github.ref == 'refs/heads/main' }}
         uses: docker/build-push-action@v5.1.0
