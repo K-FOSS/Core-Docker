@@ -91,6 +91,9 @@ generate_pcp_conf() {
         else
             echo "${PGPOOL_PCP_USER}:"`${PGPOOL_INSTALL_DIR}/bin/pg_md5 ${PGPOOL_PCP_PASSWORD}` >> ${PGPOOL_INSTALL_DIR}/etc/pcp.conf
         fi
+
+        echo "localhost:9898:${PGPOOL_PCP_USER}:${PGPOOL_PCP_PASSWORD}" > ~/.pcppass
+        chmod 0600 ~/.pcppass
     else
         echo "Skip generating pcp.conf. PGPOOL_PCP_USER or PGPOOL_PCP_PASSWORD isn't defined."
     fi
