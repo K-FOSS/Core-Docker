@@ -162,18 +162,6 @@ jobs:
 
 
 
-      - name: Build and push
-        id: openldap_build
-        if: ${{ github.ref == 'refs/heads/main' }}
-        uses: docker/build-push-action@v5.1.0
-        with:
-          context: ./Images/LDAP
-          cache-from: type=registry,ref=kristianfjones/library-openldap:latest
-          cache-to: type=inline
-          platforms: linux/amd64
-          push: true
-          tags: kristianfjones/library-openldap:latest
-
 
       # - name: Build and push
       #   id: idracexporter_build
@@ -269,15 +257,6 @@ jobs:
           push: true
           tags: kristianfjones/kea:vps1-admin
 
-      - name: Build and push
-        id: netboxdhcp_build
-        if: ${{ github.ref == 'refs/heads/main' }}
-        uses: docker/build-push-action@v5.1.0
-        with:
-          context: ./Images/NetboxDHCP
-          push: true
-          tags: kristianfjones/netbox-dhcp:main
-
 ##      - name: Build and push
 #        id: asterisk_build
 #        if: ${{ github.ref == 'refs/heads/main' }}
@@ -307,3 +286,24 @@ jobs:
       #     platforms: linux/amd64
       #     push: true
       #     tags: kristianfjones/freeswitch:latest
+
+      - name: Build and push
+        id: openldap_build
+        if: ${{ github.ref == 'refs/heads/main' }}
+        uses: docker/build-push-action@v5.1.0
+        with:
+          context: ./Images/LDAP
+          cache-from: type=registry,ref=kristianfjones/library-openldap:latest
+          cache-to: type=inline
+          platforms: linux/amd64
+          push: true
+          tags: kristianfjones/library-openldap:latest
+
+      - name: Build and push
+        id: netboxdhcp_build
+        if: ${{ github.ref == 'refs/heads/main' }}
+        uses: docker/build-push-action@v5.1.0
+        with:
+          context: ./Images/NetboxDHCP
+          push: true
+          tags: kristianfjones/netbox-dhcp:main
