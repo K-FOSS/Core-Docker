@@ -1,4 +1,4 @@
-FROM netboxcommunity/netbox:v4.3
+FROM netboxcommunity/netbox:v4.2
 
 RUN apt-get update -qq \
   && apt-get install \
