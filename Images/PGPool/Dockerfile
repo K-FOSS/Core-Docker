@@ -51,7 +51,7 @@ RUN set -eux \
     && make -j "$(nproc)" \
     && make DESTDIR=/tmp/out install \
     \
-    && RUN ldd /tmp/out/opt/pgpool-II/bin/pgpool | grep -i memcached \
+    && ldd /tmp/out/opt/pgpool-II/bin/pgpool | grep -i memcached \
     && mkdir -p /tmp/out/var/run/pgpool \
     && mkdir -p /tmp/out/var/run/postgresql \
     && mkdir -p /tmp/out/opt/pgpool-II \
