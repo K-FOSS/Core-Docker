@@ -19,7 +19,7 @@ RUN set -eux \
         gcc \
         g++ \
         libbsd-doc \
-        libmemcached \
+        libmemcached-dev \
         linux-headers \
         make \
         patch \
@@ -47,9 +47,11 @@ RUN set -eux \
         --prefix=${PGPOOL_INSTALL_DIR} \
         --with-openssl \
         --with-ldap \
+        --with-memcached=/usr \
     && make -j "$(nproc)" \
     && make DESTDIR=/tmp/out install \
     \
+    && RUN ldd /tmp/out/opt/pgpool-II/bin/pgpool | grep -i memcached \
     && mkdir -p /tmp/out/var/run/pgpool \
     && mkdir -p /tmp/out/var/run/postgresql \
     && mkdir -p /tmp/out/opt/pgpool-II \
@@ -86,7 +88,7 @@ RUN apk add --no-cache \
         postgresql \
         libmemcached \
         openssl \
-        openldap-dev \
+        openldap \
     && mkdir -p /var/run/pgpool \
     && chown -R postgres:postgres /var/run/pgpool \
     && mkdir -p /var/run/postgresql \
