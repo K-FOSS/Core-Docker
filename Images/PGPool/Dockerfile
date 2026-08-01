@@ -1,4 +1,4 @@
-FROM alpine:3.17 AS builder
+FROM alpine:3.20 AS builder
 
 ENV PGPOOL_INSTALL_DIR /opt/pgpool-II
 ENV PGPOOL_CONF_VOLUME /config
@@ -19,6 +19,7 @@ RUN set -eux \
         gcc \
         g++ \
         libbsd-doc \
+        libmemcached \
         linux-headers \
         make \
         patch \
@@ -38,7 +39,7 @@ COPY fix_compile_error.patch /tmp/pgpool/
 # Install Pgpool-II
 RUN set -eux \
     \
-    && wget -O /tmp/pgpool.tar.gz "https://pgpool.net/mediawiki/images/pgpool-II-4.7.0.tar.gz" \
+    && wget -O /tmp/pgpool.tar.gz "https://pgpool.net/source/pgpool-II-4.7.2.tar.gz" \
     && tar -zxf /tmp/pgpool.tar.gz -C /tmp/pgpool --strip-components 1 \
     && cd /tmp/pgpool \
     && patch -p1 < fix_compile_error.patch \
@@ -83,6 +84,7 @@ RUN set -ex; \
 RUN apk add --no-cache \
         bash \
         postgresql \
+        libmemcached \
         openssl \
         openldap-dev \
     && mkdir -p /var/run/pgpool \
