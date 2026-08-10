@@ -206,17 +206,17 @@ jobs:
       #     push: true
       #     tags: kristianfjones/hyperglass-docker:core0
 
-      - name: Build and push
-        id: pgexporter_build
-        if: ${{ github.ref == 'refs/heads/main' }}
-        uses: docker/build-push-action@v7
-        with:
-          context: ./Images/PGExporter
-          cache-from: type=registry,ref=kristianfjones/pgexporter-docker:core0
-          cache-to: type=inline
-          platforms: linux/amd64,linux/arm64
-          push: true
-          tags: kristianfjones/pgexporter-docker:core0
+      # - name: Build and push
+      #   id: pgexporter_build
+      #   if: ${{ github.ref == 'refs/heads/main' }}
+      #   uses: docker/build-push-action@v7
+      #   with:
+      #     context: ./Images/PGExporter
+      #     cache-from: type=registry,ref=kristianfjones/pgexporter-docker:core0
+      #     cache-to: type=inline
+      #     platforms: linux/amd64,linux/arm64
+      #     push: true
+      #     tags: kristianfjones/pgexporter-docker:core0
 
       - name: Build and push
         id: dns_build
