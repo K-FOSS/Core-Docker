@@ -35,14 +35,14 @@ RUN meson setup build \
     --prefix=/usr \
     --sysconfdir=/etc \
     --localstatedir=/var \
-    --runstatedir=/run \
     --libexecdir=lib \
     -Dcrypto=openssl \
     -Dmysql=disabled \
     -Dpostgresql=enabled \
     -Dtests=disabled \
   && meson compile -C build -j "$(nproc)" \
-  && DESTDIR=/tmp/out meson install -C build
+  && DESTDIR=/tmp/out meson install -C build \
+  && mv /tmp/out/var/run /tmp/out/run
 
 COPY ./Healthcheck.sh /tmp/out/Healthcheck.sh
 
