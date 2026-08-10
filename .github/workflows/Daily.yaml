@@ -29,6 +29,18 @@ jobs:
           password: ${{ secrets.DH_TOKEN }}
 
       - name: Build and push
+        id: keadhcp_build
+        if: ${{ github.ref == 'refs/heads/main' }}
+        uses: docker/build-push-action@v5.1.0
+        with:
+          context: ./Images/Kea
+          cache-from: type=registry,ref=kristianfjones/kea:vps1-core
+          cache-to: type=inline
+          platforms: linux/amd64
+          push: true
+          tags: kristianfjones/kea:vps1-core
+
+      - name: Build and push
         id: ipamnetbox_build
         if: ${{ github.ref == 'refs/heads/main' }}
         uses: docker/build-push-action@v5.1.0
@@ -147,18 +159,6 @@ jobs:
           platforms: linux/amd64,linux/arm64
           push: true
           tags: kristianfoss/postfix:core
-
-      - name: Build and push
-        id: keadhcp_build
-        if: ${{ github.ref == 'refs/heads/main' }}
-        uses: docker/build-push-action@v5.1.0
-        with:
-          context: ./Images/Kea
-          cache-from: type=registry,ref=kristianfjones/kea:vps1-core
-          cache-to: type=inline
-          platforms: linux/amd64
-          push: true
-          tags: kristianfjones/kea:vps1-core
 
 
 
