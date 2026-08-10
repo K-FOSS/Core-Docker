@@ -1,6 +1,8 @@
 # syntax=docker/dockerfile:1
 FROM ubuntu:24.04 AS build
 
+ENV DEBIAN_FRONTEND=noninteractive
+
 RUN sed -i -e 's/^APT/# APT/' -e 's/^DPkg/# DPkg/' \
       /etc/apt/apt.conf.d/docker-clean \
   && apt update && apt install -y \
@@ -14,13 +16,15 @@ RUN sed -i -e 's/^APT/# APT/' -e 's/^DPkg/# DPkg/' \
 RUN apt install -y \
   build-essential \
   bison \
-  botan \
   flex \
   libssl-dev \
   libcap-dev \
   libboost-dev \
   libboost-filesystem-dev \
   liblog4cplus-dev \
+  meson \
+  ninja-build \
+  pkg-config \
   postgresql-server-dev-all \
   python3-dev
 
@@ -28,34 +32,31 @@ WORKDIR /src/kea
 
 RUN ls -lah
 
-RUN ./configure \
-	--prefix=/usr \
-	--sysconfdir=/etc \
-	--localstatedir=/var \
-	--libexecdir=/usr/lib \
-	--runstatedir=/run \
-	--without-mysql \
-	--with-pgsql \
-	--disable-rpath \
-	--enable-generate-messages \
-	--enable-generate-parser \
-	--enable-shell \
-  && make -j$(nproc) \
-  && make DESTDIR=/tmp/out install
+RUN meson setup build \
+    --buildtype=release \
+    --prefix=/usr \
+    --sysconfdir=/etc \
+    --localstatedir=/var \
+    --libexecdir=lib \
+    -Dcrypto=openssl \
+    -Dmysql=disabled \
+    -Dpostgresql=enabled \
+    -Dtests=disabled \
+  && meson compile -C build -j "$(nproc)" \
+  && DESTDIR=/tmp/out meson install -C build
 
 COPY ./Healthcheck.sh /tmp/out/Healthcheck.sh
 
 FROM ubuntu:24.04
 COPY --from=build /tmp/out /
 
-ENV DEBIAN_FRONTEND noninteractive
+ENV DEBIAN_FRONTEND=noninteractive
 
 RUN sed -i -e 's/^APT/# APT/' -e 's/^DPkg/# DPkg/' \
       /etc/apt/apt.conf.d/docker-clean \
   && apt update \
   && apt install -y \
     libpq5 \
-    botan \
     wget \
     curl \
     postgresql-client \
