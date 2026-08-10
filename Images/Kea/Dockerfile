@@ -42,7 +42,9 @@ RUN meson setup build \
     -Dtests=disabled \
   && meson compile -C build -j "$(nproc)" \
   && DESTDIR=/tmp/out meson install -C build \
-  && mv /tmp/out/var/run /tmp/out/run
+  && mv /tmp/out/var/run /tmp/out/run \
+  && test -n "$(find /tmp/out/usr/lib -type f -name libdhcp_pgsql.so -print -quit)" \
+  && test -n "$(find /tmp/out/usr/lib -type f -name 'libkea-pgsql.so.*' -print -quit)"
 
 COPY ./Healthcheck.sh /tmp/out/Healthcheck.sh
 
