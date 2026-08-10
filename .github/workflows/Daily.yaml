@@ -95,15 +95,15 @@ jobs:
           push: true
           tags: kristianfjones/pgpool:latest
 
-      - name: Build and push
-        id: dockerllama_build
-        if: ${{ github.ref == 'refs/heads/main' }}
-        uses: docker/build-push-action@v7
-        with:
-          context: ./Images/Llama
-          platforms: linux/amd64
-          push: true
-          tags: kristianfoss/llama:core
+      # - name: Build and push
+      #   id: dockerllama_build
+      #   if: ${{ github.ref == 'refs/heads/main' }}
+      #   uses: docker/build-push-action@v7
+      #   with:
+      #     context: ./Images/Llama
+      #     platforms: linux/amd64
+      #     push: true
+      #     tags: kristianfoss/llama:core
 
 
       - name: Build and push
