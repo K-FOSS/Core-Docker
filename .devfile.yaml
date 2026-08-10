@@ -22,11 +22,17 @@ components:
 
       memoryRequest: 2Gi
       memoryLimit: 8Gi
-      cpuRequest: 300m
-
-      cpuLimit: 4000m
+      cpuRequest: 4000m
+      cpuLimit: 8000m
+      volumeMounts:
+        - name: containers
+          path: /home/user/.local/share/containers
       endpoints:
         - exposure: none
           name: kubedock
           protocol: tcp
           targetPort: 2475 
+
+  - name: containers
+    volume:
+      size: 100Gi
