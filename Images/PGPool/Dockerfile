@@ -1,4 +1,4 @@
-FROM alpine:3.20 AS builder
+FROM alpine:3.24 AS builder
 
 ENV PGPOOL_INSTALL_DIR /opt/pgpool-II
 ENV PGPOOL_CONF_VOLUME /config
@@ -67,7 +67,7 @@ COPY start.sh /tmp/out/opt/pgpool-II/bin/
 COPY Healthcheck.sh /tmp/out/opt/pgpool-II/bin/
 
 
-FROM alpine:latest
+FROM alpine:3.24
 
 COPY --from=builder /tmp/out /
 

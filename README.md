@@ -30,9 +30,9 @@ The main [build workflow](.github/workflows/Daily.yaml) runs after pushes to
 | [`Images/Kea`](Images/Kea) | [`kristianfjones/kea:vps1-core`](https://hub.docker.com/r/kristianfjones/kea) | amd64 |
 | [`Images/PGExporter`](Images/PGExporter) | [`kristianfjones/pgexporter-docker:core0`](https://hub.docker.com/r/kristianfjones/pgexporter-docker) | amd64, arm64 |
 | [`Images/CoreDNS`](Images/CoreDNS) | [`kristianfjones/coredns-docker:core0`](https://hub.docker.com/r/kristianfjones/coredns-docker) | amd64, arm64 |
-| [`Images/KeaAdmin`](Images/KeaAdmin) | [`kristianfjones/kea:vps1-admin`](https://hub.docker.com/r/kristianfjones/kea) | workflow default |
+| [`Images/KeaAdmin`](Images/KeaAdmin) | [`kristianfjones/kea:vps1-admin`](https://hub.docker.com/r/kristianfjones/kea) | amd64 |
 | [`Images/LDAP`](Images/LDAP) | [`kristianfjones/library-openldap:latest`](https://hub.docker.com/r/kristianfjones/library-openldap) | amd64 |
-| [`Images/NetboxDHCP`](Images/NetboxDHCP) | [`kristianfjones/netbox-dhcp:main`](https://hub.docker.com/r/kristianfjones/netbox-dhcp) | workflow default |
+| [`Images/NetboxDHCP`](Images/NetboxDHCP) | [`kristianfjones/netbox-dhcp:main`](https://hub.docker.com/r/kristianfjones/netbox-dhcp) | amd64 |
 
 The separate [kubectl workflow](.github/workflows/KubeCTL.yaml) builds
 [`Images/KubeCTL`](Images/KubeCTL) for amd64 and arm64. It currently publishes

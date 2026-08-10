@@ -1,5 +1,12 @@
 name: ci
 
+permissions:
+  contents: read
+
+concurrency:
+  group: daily-images-${{ github.ref }}
+  cancel-in-progress: true
+
 on:
   push:
     branches:
@@ -14,16 +21,16 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
 
       - name: Set up QEMU
-        uses: docker/setup-qemu-action@v3
+        uses: docker/setup-qemu-action@v4
 
       - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+        uses: docker/setup-buildx-action@v4
 
       - name: Login to DockerHub
-        uses: docker/login-action@v3
+        uses: docker/login-action@v4
         with:
           username: ${{ secrets.DH_USER }}
           password: ${{ secrets.DH_TOKEN }}
@@ -31,7 +38,7 @@ jobs:
       - name: Build and push
         id: keadhcp_build
         if: ${{ github.ref == 'refs/heads/main' }}
-        uses: docker/build-push-action@v5.1.0
+        uses: docker/build-push-action@v7
         with:
           context: ./Images/Kea
           cache-from: type=registry,ref=kristianfjones/kea:vps1-core
@@ -43,7 +50,7 @@ jobs:
       - name: Build and push
         id: ipamnetbox_build
         if: ${{ github.ref == 'refs/heads/main' }}
-        uses: docker/build-push-action@v5.1.0
+        uses: docker/build-push-action@v7
         with:
           context: ./Images/NetBox
           cache-from: type=registry,ref=kristianfoss/netbox:core
@@ -55,7 +62,7 @@ jobs:
       - name: Build and push
         id: upnpc_build
         if: ${{ github.ref == 'refs/heads/main' }}
-        uses: docker/build-push-action@v5.1.0
+        uses: docker/build-push-action@v7
         with:
           context: ./Images/UPNP
           cache-from: type=registry,ref=kristianfjones/upnp:jobs
@@ -67,7 +74,7 @@ jobs:
       - name: Build and push
         id: mcphub_build
         if: ${{ github.ref == 'refs/heads/main' }}
-        uses: docker/build-push-action@v5.1.0
+        uses: docker/build-push-action@v7
         with:
           context: ./Images/MCP/MCPHub
           cache-from: type=registry,ref=kristianfjones/mcphub:latest
@@ -79,7 +86,7 @@ jobs:
       - name: Build and push
         id: pgpool_build
         if: ${{ github.ref == 'refs/heads/main' }}
-        uses: docker/build-push-action@v5.1.0
+        uses: docker/build-push-action@v7
         with:
           context: ./Images/PGPool
           cache-from: type=registry,ref=kristianfjones/pgpool:latest
@@ -91,7 +98,7 @@ jobs:
       - name: Build and push
         id: dockerllama_build
         if: ${{ github.ref == 'refs/heads/main' }}
-        uses: docker/build-push-action@v5.1.0
+        uses: docker/build-push-action@v7
         with:
           context: ./Images/Llama
           platforms: linux/amd64
@@ -102,7 +109,7 @@ jobs:
       - name: Build and push
         id: docker_build
         if: ${{ github.ref == 'refs/heads/main' }}
-        uses: docker/build-push-action@v5.1.0
+        uses: docker/build-push-action@v7
         with:
           context: ./Images/Docker
           platforms: linux/amd64,linux/arm64
@@ -112,7 +119,7 @@ jobs:
       - name: Build and push
         id: mcpdomaintoold_build
         if: ${{ github.ref == 'refs/heads/main' }}
-        uses: docker/build-push-action@v5.1.0
+        uses: docker/build-push-action@v7
         with:
           context: ./Images/MCP/NetworkTools
           platforms: linux/amd64,linux/arm64
@@ -122,7 +129,7 @@ jobs:
       - name: Build and push
         id: mcpsearch_build
         if: ${{ github.ref == 'refs/heads/main' }}
-        uses: docker/build-push-action@v5.1.0
+        uses: docker/build-push-action@v7
         with:
           context: ./Images/MCP/Search
           platforms: linux/amd64,linux/arm64
@@ -132,7 +139,7 @@ jobs:
       - name: Build and push
         id: dockermcpserver_build
         if: ${{ github.ref == 'refs/heads/main' }}
-        uses: docker/build-push-action@v5.1.0
+        uses: docker/build-push-action@v7
         with:
           context: ./Images/MCP/Docker
           platforms: linux/amd64,linux/arm64
@@ -143,7 +150,7 @@ jobs:
       - name: Build and push
         id: openwebuimcpo_build
         if: ${{ github.ref == 'refs/heads/main' }}
-        uses: docker/build-push-action@v5.1.0
+        uses: docker/build-push-action@v7
         with:
           context: ./Images/OpenWebUI
           platforms: linux/amd64,linux/arm64
@@ -153,7 +160,7 @@ jobs:
       - name: Build and push
         id: postfix_build
         if: ${{ github.ref == 'refs/heads/main' }}
-        uses: docker/build-push-action@v5.1.0
+        uses: docker/build-push-action@v7
         with:
           context: ./Images/Postfix
           platforms: linux/amd64,linux/arm64
@@ -202,7 +209,7 @@ jobs:
       - name: Build and push
         id: pgexporter_build
         if: ${{ github.ref == 'refs/heads/main' }}
-        uses: docker/build-push-action@v5.1.0
+        uses: docker/build-push-action@v7
         with:
           context: ./Images/PGExporter
           cache-from: type=registry,ref=kristianfjones/pgexporter-docker:core0
@@ -214,7 +221,7 @@ jobs:
       - name: Build and push
         id: dns_build
         if: ${{ github.ref == 'refs/heads/main' }}
-        uses: docker/build-push-action@v5.1.0
+        uses: docker/build-push-action@v7
         with:
           context: ./Images/CoreDNS
           cache-from: type=registry,ref=kristianfjones/coredns-docker:core0
@@ -251,7 +258,7 @@ jobs:
       - name: Build and push
         id: keaadmin_build
         if: ${{ github.ref == 'refs/heads/main' }}
-        uses: docker/build-push-action@v5.1.0
+        uses: docker/build-push-action@v7
         with:
           context: ./Images/KeaAdmin
           push: true
@@ -278,7 +285,7 @@ jobs:
       # - name: Build and push
       #   id: freeswitch_build
       #   if: ${{ github.ref == 'refs/heads/main' }}
-      #   uses: docker/build-push-action@v5.1.0
+      #   uses: docker/build-push-action@v7
       #   with:
       #     context: ./Images/FreeSwitch
       #     cache-from: type=registry,ref=kristianfjones/freeswitch:latest
@@ -290,7 +297,7 @@ jobs:
       - name: Build and push
         id: openldap_build
         if: ${{ github.ref == 'refs/heads/main' }}
-        uses: docker/build-push-action@v5.1.0
+        uses: docker/build-push-action@v7
         with:
           context: ./Images/LDAP
           cache-from: type=registry,ref=kristianfjones/library-openldap:latest
@@ -302,7 +309,7 @@ jobs:
       - name: Build and push
         id: netboxdhcp_build
         if: ${{ github.ref == 'refs/heads/main' }}
-        uses: docker/build-push-action@v5.1.0
+        uses: docker/build-push-action@v7
         with:
           context: ./Images/NetboxDHCP
           push: true
