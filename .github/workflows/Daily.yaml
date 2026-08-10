@@ -314,3 +314,30 @@ jobs:
           context: ./Images/NetboxDHCP
           push: true
           tags: kristianfjones/netbox-dhcp:main
+
+  dockerhub-description:
+    needs: docker
+    if: ${{ github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      max-parallel: 4
+      matrix:
+        include:
+          - repository: kristianfjones/kea
+            readme: ./Images/Kea/README.md
+          - repository: kristianfoss/netbox
+            readme: ./Images/NetBox/README.md
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Update Docker Hub description
+        uses: peter-evans/dockerhub-description@1b9a80c056b620d92cedb9d9b5a223409c68ddfa # v5.0.0
+        with:
+          username: ${{ secrets.DH_USER }}
+          password: ${{ secrets.DH_TOKEN }}
+          repository: ${{ matrix.repository }}
+          readme-filepath: ${{ matrix.readme }}
+          enable-url-completion: true

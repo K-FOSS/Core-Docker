@@ -104,7 +104,13 @@ otherwise. When updating an image:
 There is no repository-wide test suite. A successful local image build and a
 focused runtime smoke test are the primary validation. GitHub Actions owns
 publishing; Docker Hub credentials are supplied through the `DH_USER` and
-`DH_TOKEN` repository secrets and must never be committed.
+`DH_TOKEN` repository secrets and must never be committed. After all active
+images in the daily workflow build successfully, the Kea and NetBox image
+READMEs are also published as their Docker Hub repository descriptions.
+Because Docker Hub descriptions belong to repositories rather than tags,
+`Images/Kea/README.md` describes the shared `kristianfjones/kea` repository,
+and the separately built `vps1-admin` tag cannot publish an independent
+`Images/KeaAdmin/README.md` overview.
 
 See [`AGENTS.md`](AGENTS.md) for repository-specific guidance for coding
 agents and automated contributors.

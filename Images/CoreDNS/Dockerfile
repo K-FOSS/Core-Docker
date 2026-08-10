@@ -3,7 +3,7 @@ FROM debian:stable-slim as certs
 RUN apt-get update && apt-get -uy upgrade
 RUN apt-get -y install ca-certificates && update-ca-certificates
 
-FROM golang:bullseye as builder
+FROM golang:1.26-bookworm AS builder
 ARG TARGETOS
 ARG TARGETARCH
 

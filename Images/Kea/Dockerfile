@@ -30,13 +30,12 @@ RUN apt install -y \
 
 WORKDIR /src/kea
 
-RUN ls -lah
-
 RUN meson setup build \
     --buildtype=release \
     --prefix=/usr \
     --sysconfdir=/etc \
     --localstatedir=/var \
+    --runstatedir=/run \
     --libexecdir=lib \
     -Dcrypto=openssl \
     -Dmysql=disabled \
