@@ -1,4 +1,4 @@
-FROM docker.io/netboxcommunity/netbox:v4.5
+FROM docker.io/netboxcommunity/netbox:v4.6.1
 
 RUN apt-get update -qq \
   && apt-get install \

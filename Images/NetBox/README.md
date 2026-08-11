@@ -1,6 +1,6 @@
 # NetBox
 
-Customized [NetBox Docker](https://github.com/netbox-community/netbox-docker) image based on NetBox `v4.5`. CI publishes `kristianfoss/netbox:core` for `linux/amd64` and `linux/arm64`.
+Customized [NetBox Docker](https://github.com/netbox-community/netbox-docker) image based on NetBox `v4.6.1`. CI publishes `kristianfoss/netbox:core` for `linux/amd64` and `linux/arm64`.
 
 Dependencies from [`plugin_requirements.txt`](plugin_requirements.txt) are installed during the build. [`configuration/load_plugin.py`](configuration/load_plugin.py) enables `netbox_ipcalculator`, `netbox_topology_views`, and `netbox_lists` while static assets are collected. The other packages are installed but are not enabled by this build-time configuration; enable and configure the plugins required by a deployment through the upstream NetBox Docker configuration mechanism.
 
@@ -28,6 +28,14 @@ Dependencies from [`plugin_requirements.txt`](plugin_requirements.txt) are insta
 | [`netbox-acls`](https://pypi.org/project/netbox-acls/) | No |
 
 The PyPI dependencies are unpinned, and `netbox-ddns` is installed from its mutable `main` branch, so plugin versions can change when the image is rebuilt.
+
+Compatibility status at the NetBox 4.6.1 bump:
+
+- Explicitly documented as 4.6-compatible upstream: `netbox-lists`, `netbox-acls`, `netbox-inventory`.
+- Documented as compatible with the 4.6 line or with a broad enough lower bound that they are expected to work on 4.6, but not yet backed here by a repo-level compatibility check: `netbox-ipcalculator`, `netbox-data-flows`.
+- Still requiring follow-up before this image can be called fully 4.6-ready: `netbox-topology-views`, `netbox-plugin-dns`, `netbox-gateways`, `netbox-contract`, `netbox-routing`, `nb-service`, `netbox-tunnels2`, `netbox_kea`, `netbox-plugin-device-map`, and `netbox-ddns` from `main`.
+
+The next maintenance step is to replace or pin the remaining lagging plugins to versions that explicitly declare NetBox 4.6 support, then re-test the build and collectstatic path before taking another NetBox minor update.
 
 Runtime configuration, secrets, database, Redis, migrations, and startup behavior are inherited from the upstream image; follow the [NetBox Docker plugin configuration](https://github.com/netbox-community/netbox-docker/wiki/Using-Netbox-Plugins) and [quickstart](https://github.com/netbox-community/netbox-docker/wiki/Quickstart).
 
