@@ -1,11 +1,14 @@
-# syntax=docker/dockerfile:1
+# syntax=docker/dockerfile:1.7
 FROM ubuntu:24.04 AS build
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN sed -i -e 's/^APT/# APT/' -e 's/^DPkg/# DPkg/' \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
+    sed -i -e 's/^APT/# APT/' -e 's/^DPkg/# DPkg/' \
       /etc/apt/apt.conf.d/docker-clean \
-  && apt update && apt install -y \
+  && apt-get update \
+  && apt-get install -y \
   git \
   wget \
   tar \
@@ -13,7 +16,9 @@ RUN sed -i -e 's/^APT/# APT/' -e 's/^DPkg/# DPkg/' \
   && mkdir -p /src/kea \
   && wget -O - https://downloads.isc.org/isc/kea/3.2.0/kea-3.2.0.tar.xz | tar xJ -C /src/kea --strip-components=1
 
-RUN apt install -y \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
+    apt-get install -y \
   build-essential \
   bison \
   flex \
@@ -53,10 +58,12 @@ COPY --from=build /tmp/out /
 
 ENV DEBIAN_FRONTEND=noninteractive
 
-RUN sed -i -e 's/^APT/# APT/' -e 's/^DPkg/# DPkg/' \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+    --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
+    sed -i -e 's/^APT/# APT/' -e 's/^DPkg/# DPkg/' \
       /etc/apt/apt.conf.d/docker-clean \
-  && apt update \
-  && apt install -y \
+  && apt-get update \
+  && apt-get install -y \
     libpq5 \
     wget \
     curl \

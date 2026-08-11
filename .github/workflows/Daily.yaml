@@ -112,6 +112,8 @@ jobs:
         uses: docker/build-push-action@v7
         with:
           context: ./Images/Docker
+          cache-from: type=registry,ref=kristianfoss/docker:core-mcp
+          cache-to: type=inline
           platforms: linux/amd64,linux/arm64
           push: true
           tags: kristianfoss/docker:core-mcp
@@ -122,6 +124,8 @@ jobs:
         uses: docker/build-push-action@v7
         with:
           context: ./Images/MCP/NetworkTools
+          cache-from: type=registry,ref=kristianfoss/mcp-domaintools:core-mcp
+          cache-to: type=inline
           platforms: linux/amd64,linux/arm64
           push: true
           tags: kristianfoss/mcp-domaintools:core-mcp
@@ -142,6 +146,8 @@ jobs:
         uses: docker/build-push-action@v7
         with:
           context: ./Images/MCP/Docker
+          cache-from: type=registry,ref=kristianfoss/docker-mcp:testing
+          cache-to: type=inline
           platforms: linux/amd64,linux/arm64
           push: true
           tags: kristianfoss/docker-mcp:testing
@@ -153,6 +159,8 @@ jobs:
         uses: docker/build-push-action@v7
         with:
           context: ./Images/OpenWebUI
+          cache-from: type=registry,ref=kristianfoss/openwebui:core-mcp
+          cache-to: type=inline
           platforms: linux/amd64,linux/arm64
           push: true
           tags: kristianfoss/openwebui:core-mcp
@@ -163,6 +171,8 @@ jobs:
         uses: docker/build-push-action@v7
         with:
           context: ./Images/Postfix
+          cache-from: type=registry,ref=kristianfoss/postfix:core
+          cache-to: type=inline
           platforms: linux/amd64,linux/arm64
           push: true
           tags: kristianfoss/postfix:core

@@ -1,13 +1,16 @@
+# syntax=docker/dockerfile:1.7
 FROM docker.io/netboxcommunity/netbox:v4.6.1
 
-RUN apt-get update -qq \
+RUN --mount=type=cache,target=/var/cache/apt,sharing=locked \
+  --mount=type=cache,target=/var/lib/apt/lists,sharing=locked \
+  apt-get update -qq \
   && apt-get install \
   --yes -qq --no-install-recommends \
-  git \
-  &&  rm -rf /var/lib/apt/lists/*
+  git
 
 COPY ./plugin_requirements.txt /
-RUN /usr/local/bin/uv pip install -r /plugin_requirements.txt
+RUN --mount=type=cache,target=/root/.cache/uv \
+  /usr/local/bin/uv pip install -r /plugin_requirements.txt
 
 COPY configuration/load_plugin.py /etc/netbox/config/load_plugin.py
 
