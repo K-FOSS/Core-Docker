@@ -21,7 +21,7 @@ components:
       image: quay.io/devfile/universal-developer-image:latest
 
       memoryRequest: 2Gi
-      memoryLimit: 8Gi
+      memoryLimit: 16Gi
       cpuRequest: 4000m
       cpuLimit: 8000m
       volumeMounts:
@@ -36,3 +36,17 @@ components:
   - name: containers
     volume:
       size: 100Gi
+
+attributes:
+  pod-overrides:
+    metadata:
+      labels:
+        che-workspace: 'true'
+    spec:
+      affinity:
+        podAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            - labelSelector:
+                matchLabels:
+                  che-workspace: 'true'
+              topologyKey: kubernetes.io/hostname
