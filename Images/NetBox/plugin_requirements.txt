@@ -9,6 +9,7 @@ nb-service
 netbox-plugin-dns
 netbox-bgp
 netbox_kea
+netbox-opennms-plugin
 netbox-data-flows
 netbox-tunnels2
 netbox-inventory

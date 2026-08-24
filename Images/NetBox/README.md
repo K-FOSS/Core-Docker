@@ -12,8 +12,9 @@ Dependencies from [`plugin_requirements.txt`](plugin_requirements.txt) are insta
 | [`netbox-ddns`](https://github.com/Xyphen-IT/netbox-ddns) | No |
 | [`netbox-ipcalculator`](https://pypi.org/project/netbox-ipcalculator/) | Yes (`netbox_ipcalculator`) |
 | [`netbox-topology-views`](https://pypi.org/project/netbox-topology-views/) | Yes (`netbox_topology_views`) |
-| [`netbox-plugin-device-map`](https://pypi.org/project/netbox-plugin-device-map/) | No |
-| [`phonebox_plugin`](https://pypi.org/project/phonebox-plugin/) | No |
+| [`netbox-plugin-device-map`](https://pypi.org/project/netbox-plugin-device-map/) | Yes (`netbox_device_map`) |
+| [`phonebox_plugin`](https://pypi.org/project/phonebox-plugin/) | Yes (`phonebox_plugin`) |
+| [`netbox-opennms-plugin`](https://github.com/no42-org/netbox-opennms-plugin) | Yes (`netbox_opennms`) |
 | [`netbox-gateways`](https://pypi.org/project/netbox-gateways/) | No |
 | [`nb-service`](https://pypi.org/project/nb-service/) | No |
 | [`netbox-plugin-dns`](https://pypi.org/project/netbox-plugin-dns/) | No |
@@ -28,6 +29,8 @@ Dependencies from [`plugin_requirements.txt`](plugin_requirements.txt) are insta
 | [`netbox-acls`](https://pypi.org/project/netbox-acls/) | No |
 
 The PyPI dependencies are unpinned, and `netbox-ddns` is installed from its mutable `main` branch, so plugin versions can change when the image is rebuilt.
+
+The plugins enabled while collecting static assets are `netbox_ipcalculator`, `netbox_topology_views`, `netbox_lists`, `netbox_device_map`, and `phonebox_plugin`. The image copies only the static output and does not leave the temporary build-time configuration in the final layer.
 
 Compatibility status at the NetBox 4.6.1 bump:
 
