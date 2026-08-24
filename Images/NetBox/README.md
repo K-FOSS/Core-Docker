@@ -1,6 +1,6 @@
 # NetBox
 
-Customized [NetBox Docker](https://github.com/netbox-community/netbox-docker) image based on NetBox `v4.6.2`. CI publishes `kristianfoss/netbox:core` for `linux/amd64` and `linux/arm64`.
+Customized [NetBox Docker](https://github.com/netbox-community/netbox-docker) image based on NetBox `v4.6.8`. CI publishes `kristianfoss/netbox:core` for `linux/amd64` and `linux/arm64`.
 
 Dependencies from [`plugin_requirements.txt`](plugin_requirements.txt) are installed during the build. [`configuration/load_plugin.py`](configuration/load_plugin.py) enables `netbox_ipcalculator`, `netbox_topology_views`, and `netbox_lists` while static assets are collected. The other packages are installed but are not enabled by this build-time configuration; enable and configure the plugins required by a deployment through the upstream NetBox Docker configuration mechanism.
 
