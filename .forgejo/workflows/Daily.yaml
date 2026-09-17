@@ -112,7 +112,7 @@ jobs:
         with:
           registry: ${{ steps.forgejo-image.outputs.registry }}
           username: ${{ secrets.FORGEJO_REGISTRY_USERNAME || forgejo.repository_owner }}
-          password: ${{ secrets.FORGEJO_REGISTRY_PASSWORD }}
+          password: ${{ secrets.REGISTRY_PASSWORD }}
       - name: Build and push image
         uses: https://github.com/docker/build-push-action@v6
         with:
