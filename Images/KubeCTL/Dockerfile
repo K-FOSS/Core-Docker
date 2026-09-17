@@ -1,4 +1,4 @@
-FROM docker.io/library/alpine:3.14
+FROM docker.io/library/alpine:3.24
 ARG VERSION=v1.23.10
 ARG TARGETARCH
 
