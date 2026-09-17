@@ -5,9 +5,13 @@ infrastructure, networking, observability, and MCP workloads. Each image has an
 independent build context under [`Images/`](Images/); this repository is not a
 single application or a Docker Compose stack.
 
-Images on the default branch are built by GitHub Actions and published to
-Docker Hub. Some directories are retained as experiments or historical build
-contexts and are not currently published by CI.
+Images on the default branch are built by GitHub Actions or the equivalent
+Forgejo Actions workflows and published to Docker Hub and the Forgejo
+container registry. The Forgejo workflows
+are in [`.forgejo/workflows/`](.forgejo/workflows/) and target a runner with
+the `docker` label, using the YXL runner's Docker endpoint. Some directories
+are retained as experiments or historical build contexts and are not currently
+published by CI.
 
 ## Published images
 
@@ -55,6 +59,19 @@ Treat these as experimental or historical until their build is restored and
 validated. A Dockerfile's presence alone does not mean its image is published.
 
 ## Build an image locally
+
+### Forgejo runner prerequisites
+
+Enable Actions for the repository, register an online runner with the `docker`
+label, and configure its job container to provide a Docker-compatible endpoint
+at `tcp://127.0.0.1:2376` with `/certs/client` mounted. Add the `DH_USER` and
+`DH_TOKEN` repository secrets for Docker Hub publishing. Add
+`FORGEJO_REGISTRY_PASSWORD` and, optionally, `FORGEJO_REGISTRY_USERNAME` for
+Forgejo registry publishing; the username defaults to the Forgejo repository
+owner. Forgejo images use the
+`<forgejo-host>/<owner>/<repository>/<image>:<tag>` naming convention. The
+workflows install their Docker client and JavaScript-action dependencies in the Ubuntu 24.04 job
+container; the runner must also support privileged containers and ARM64 QEMU.
 
 Run builds from the repository root and use the image directory as the build
 context:
@@ -111,6 +128,32 @@ Because Docker Hub descriptions belong to repositories rather than tags,
 `Images/Kea/README.md` describes the shared `kristianfjones/kea` repository,
 and the separately built `vps1-admin` tag cannot publish an independent
 `Images/KeaAdmin/README.md` overview.
+
+## Shared Dev Spaces container storage
+
+This repository's [devfile](.devfile.yaml) uses
+[Kubedock](https://docs.redhat.com/en/documentation/red_hat_openshift_dev_spaces/3.29/html/user_guide/assembly_using-fuse-overlayfs_user_guide)
+for Docker-compatible `run` operations. Kubedock asks the OpenShift cluster
+runtime to pull images, so its node image cache is not stored in a workspace
+volume.
+
+For local rootless Podman/Buildah pulls and builds, a Dev Spaces administrator
+can apply [`devspaces/container-images-pvc.yaml`](devspaces/container-images-pvc.yaml)
+in a user's Dev Spaces project before starting a workspace. Dev Spaces mounts
+the claim at Podman's rootless image-store path in every workspace in that
+project. The claim requires a storage class that supports `ReadWriteMany`.
+
+```sh
+oc apply -f devspaces/container-images-pvc.yaml -n <devspaces-user-project>
+```
+
+The container storage database is not designed for concurrent writers. Stop
+other workspaces that use Podman or Buildah before modifying the shared store;
+concurrently running workspaces may use it read-only. For safe concurrent
+builds across users or projects, use a registry or a BuildKit registry cache
+instead of sharing this filesystem. The PVC is deliberately not part of the
+devfile lifecycle, so deleting this workspace does not delete the shared image
+store.
 
 See [`AGENTS.md`](AGENTS.md) for repository-specific guidance for coding
 agents and automated contributors.

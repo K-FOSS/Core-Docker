@@ -8,9 +8,6 @@ on:
   schedule:
     - cron: '30 5,17 * * *'
 
-permissions:
-  contents: read
-
 concurrency:
   group: kubectl-images-${{ forgejo.ref }}
   cancel-in-progress: true
@@ -29,7 +26,7 @@ jobs:
         version: [v1.24.4, v1.23.10]
     steps:
       - name: Bootstrap JavaScript actions
-        run: apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ca-certificates docker.io git nodejs
+        run: apt-get update && DEBIAN_FRONTEND=noninteractive apt-get install -y --no-install-recommends ca-certificates docker.io git nodejs python3
       - name: Check out repository
         uses: https://github.com/actions/checkout@v4
         with:
@@ -46,6 +43,34 @@ jobs:
           registry: docker.io
           username: ${{ secrets.DH_USER }}
           password: ${{ secrets.DH_TOKEN }}
+      - name: Configure Forgejo image reference
+        id: forgejo-image
+        shell: bash
+        env:
+          FORGEJO_SERVER_URL: ${{ forgejo.server_url }}
+          FORGEJO_REPOSITORY: ${{ forgejo.repository }}
+          IMAGE_TAG: ${{ matrix.version }}
+        run: |
+          set -euo pipefail
+          python3 - <<'PY'
+          import os
+          from urllib.parse import urlsplit
+
+          server = urlsplit(os.environ['FORGEJO_SERVER_URL'])
+          if server.scheme != 'https' or not server.hostname or server.username or server.password:
+              raise SystemExit('Expected an HTTPS Forgejo server URL without credentials')
+          registry = server.netloc.lower()
+          repository = os.environ['FORGEJO_REPOSITORY'].lower()
+          image = f"{registry}/{repository}/kubectl:{os.environ['IMAGE_TAG']}"
+          with open(os.environ['GITHUB_OUTPUT'], 'a') as output:
+              output.write(f'registry={registry}\nref={image}\n')
+          PY
+      - name: Log in to Forgejo registry
+        uses: https://github.com/docker/login-action@v3
+        with:
+          registry: ${{ steps.forgejo-image.outputs.registry }}
+          username: ${{ secrets.FORGEJO_REGISTRY_USERNAME || forgejo.repository_owner }}
+          password: ${{ secrets.FORGEJO_REGISTRY_PASSWORD }}
       - name: Build and push image
         uses: https://github.com/docker/build-push-action@v6
         with:
@@ -55,4 +80,6 @@ jobs:
           platforms: linux/amd64,linux/arm64
           build-args: VERSION=${{ matrix.version }}
           push: ${{ forgejo.ref == 'refs/heads/main' }}
-          tags: kristianfjones/kubectl:${{ matrix.version }}
+          tags: |
+            kristianfjones/kubectl:${{ matrix.version }}
+            ${{ steps.forgejo-image.outputs.ref }}
